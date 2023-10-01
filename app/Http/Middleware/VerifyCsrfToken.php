@@ -11,6 +11,11 @@ class VerifyCsrfToken extends Middleware
      *
      * @var array<int, string>
      */
+    protected $middleware = [
+        // ...
+        \App\Http\Middleware\VerifyCsrfToken::class,
+    ];
+    
     protected $except = [
         //
     ];

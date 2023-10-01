@@ -29,7 +29,11 @@ class DepartmentController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $department = new Department();
+        $department->departmentName = $request->departmentName;
+
+        $department->save();
+        return response()->json(['message' => 'Departamento creado con éxito'], 201);
     }
 
     /**
