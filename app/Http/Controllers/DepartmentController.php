@@ -3,7 +3,7 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
-use App\Models\Departament;
+use App\Models\Department;
 
 class DepartmentController extends Controller
 {
@@ -12,7 +12,7 @@ class DepartmentController extends Controller
      */
     public function index()
     {
-        $departments = Departament::where('status','Active')->get(['departmentId','departmentName','status','created_at','updated_at']);
+        $departments = Department::where('status','Active')->get(['departmentId','departmentName','status','created_at','updated_at']);
         return $departments;
     }
 
