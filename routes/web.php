@@ -20,15 +20,16 @@ use App\Http\Controllers\ChangePassword;
 | be assigned to the "web" middleware group. Make something great!
 |
 */
-Route::get('/department', [DepartmentController::class, 'index'])->middleware('guest');
-Route::get('/csrf-token', function() {
+	Route::get('/department', [DepartmentController::class, 'index'])->middleware('guest');
+	Route::get('/csrf-token', function() {
 	return response()->json(['csrf_token' => csrf_token()]);
 	})->middleware('guest');
-	Route::post('/department/store', [DepartmentController::class, 'store'])->middleware('guest');
-Route::get('/', function () {
-    return view('welcome');
-});
+	Route::post('/department/store', [DepartmentController::class, 'store']);
+	Route::get('/', function () {
+		return view('welcome');
+	});
 
+	Route::post('/login-mobile',[LoginController::class, 'loginMobile'])->middleware('guest');
 
 
 // Route::resource('department',DepartmentController::class);
@@ -37,8 +38,8 @@ Route::get('/', function () {
 	Route::get('/', function () {return redirect('/dashboard');})->middleware('auth');
 	Route::get('/register', [RegisterController::class, 'create'])->middleware('guest')->name('register');
 	Route::post('/register', [RegisterController::class, 'store'])->middleware('guest')->name('register.perform');
-	Route::get('/iniciar-sesión', [LoginController::class, 'show'])->middleware('guest')->name('login');
-	Route::post('/iniciar-sesión', [LoginController::class, 'login'])->middleware('guest')->name('login.perform');
+	Route::get('/iniciar-sesion', [LoginController::class, 'show'])->middleware('guest')->name('login');
+	Route::post('/iniciar-sesion', [LoginController::class, 'login'])->middleware('guest')->name('login.perform');
 	Route::get('/reset-password', [ResetPassword::class, 'show'])->middleware('guest')->name('reset-password');
 	Route::post('/reset-password', [ResetPassword::class, 'send'])->middleware('guest')->name('reset.perform');
 	Route::get('/change-password', [ChangePassword::class, 'show'])->middleware('guest')->name('change-password');
