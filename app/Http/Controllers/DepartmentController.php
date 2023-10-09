@@ -16,6 +16,10 @@ class DepartmentController extends Controller
         return $departments;
     }
 
+    public function listDepartments(){
+        $departments = Department::where('status','Active')->get(['departmentId','departmentName','status','created_at','updated_at']);
+        return view('configuration.departments.index', compact('departments'));
+    }
     /**
      * Show the form for creating a new resource.
      */
