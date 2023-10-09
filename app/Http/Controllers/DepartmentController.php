@@ -12,11 +12,14 @@ class DepartmentController extends Controller
      */
     public function index()
     {
-        //
-        $department = Department::all();
-        return $department;
+        $departments = Department::where('status','Active')->get(['departmentId','departmentName','status','created_at','updated_at']);
+        return $departments;
     }
 
+    public function listDepartments(){
+        $departments = Department::where('status','Active')->get(['departmentId','departmentName','status','created_at','updated_at']);
+        return view('configuration.departments.index', compact('departments'));
+    }
     /**
      * Show the form for creating a new resource.
      */
@@ -35,6 +38,7 @@ class DepartmentController extends Controller
         $department->departmentName = $request->departmentName;
 
         $department->save();
+        return response()->json(['message' => 'Departamento creado con éxito'], 201);
     }
 
     /**
