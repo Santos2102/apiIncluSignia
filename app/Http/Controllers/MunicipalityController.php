@@ -3,6 +3,9 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use App\Models\Municipality;
+use App\Models\Department;
+use App\Http\Controllers\MunicipalityController;
 
 class MunicipalityController extends Controller
 {
@@ -12,6 +15,9 @@ class MunicipalityController extends Controller
     public function index()
     {
         //
+        $municipality = Municipality::where('status','Active')->with('departments')->get();
+        //return $municipality;
+        return view('configuration.municipalities.index', compact('municipality'));
     }
 
     /**
@@ -20,6 +26,8 @@ class MunicipalityController extends Controller
     public function create()
     {
         //
+        $department = Department::where('status','Active')->get(['departmentId','departmentName']);
+        return view('configuration.municipalities.create', compact('department'));
     }
 
     /**
@@ -28,6 +36,12 @@ class MunicipalityController extends Controller
     public function store(Request $request)
     {
         //
+        $munipality = new Municipality();
+        $munipality->municipalityName = $request->municipalityName;
+        $munipality->departmentId = decrypt ($request -> departmentId);  
+
+        $munipality->save();
+        return redirect()->action([MunicipalityController::class,'index'])->with('success','Municipio creado');
     }
 
     /**
