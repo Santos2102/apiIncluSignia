@@ -10,4 +10,8 @@ class Department extends Model
     use HasFactory;
     protected $table = "departments";
     protected $fillable=['departmentId','departmentName','status','created_at','updated_at'];
+
+    public function municipalities(){
+        return $this->hasMany('App\Models\Municipality');       
+    }
 }

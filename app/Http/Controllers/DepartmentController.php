@@ -2,8 +2,9 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\Department;
 use Illuminate\Http\Request;
+use App\Models\Department;
+use App\Http\Controllers\DepartmentController;
 
 class DepartmentController extends Controller
 {
@@ -25,8 +26,7 @@ class DepartmentController extends Controller
      */
     public function create()
     {
-        //
-        return view('department');
+        return view('configuration.departments.create');
     }
 
     /**
@@ -39,6 +39,15 @@ class DepartmentController extends Controller
 
         $department->save();
         return response()->json(['message' => 'Departamento creado con éxito'], 201);
+    }
+
+    public function storeWeb(Request $request)
+    {
+        $department = new Department();
+        $department->departmentName = $request->departmentName;
+
+        $department->save();
+        return redirect()->action([DepartmentController::class,'listDepartments'])->with('success','Departamento creado');
     }
 
     /**

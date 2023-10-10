@@ -9,6 +9,7 @@ use App\Http\Controllers\LoginController;
 use App\Http\Controllers\UserProfileController;
 use App\Http\Controllers\ResetPassword;
 use App\Http\Controllers\ChangePassword;   
+use App\Http\Controllers\MunicipalityController;   
 
 /*
 |--------------------------------------------------------------------------
@@ -24,7 +25,7 @@ use App\Http\Controllers\ChangePassword;
 	Route::get('/csrf-token', function() {
 	return response()->json(['csrf_token' => csrf_token()]);
 	})->middleware('guest');
-	Route::post('/department/store', [DepartmentController::class, 'store']);
+	
 	Route::get('/', function () {
 		return view('welcome');
 	});
@@ -44,8 +45,16 @@ use App\Http\Controllers\ChangePassword;
 	Route::post('/reset-password', [ResetPassword::class, 'send'])->middleware('guest')->name('reset.perform');
 	Route::get('/change-password', [ChangePassword::class, 'show'])->middleware('guest')->name('change-password');
 	Route::post('/change-password', [ChangePassword::class, 'update'])->middleware('guest')->name('change.perform');
+
+	//Rutas de Departamentos
 	Route::get('/departamentos', [DepartmentController::class, 'listDepartments'])->middleware('auth')->name('listDepartments');
-	
+	Route::get('/crear-departamentos', [DepartmentController::class, 'create'])->middleware('auth')->name('createDepartment');
+	Route::post('/departmentos/store', [DepartmentController::class, 'store'])->middleware('auth')->name('storeDepartments');
+
+	//Rutas de municipios
+	Route::get('/municipios', [MunicipalityController::class, 'index'])->middleware('auth')->name('listMunicipalities');
+	Route::get('/crear-municipios', [MunicipalityController::class, 'create'])->middleware('auth')->name('createMunicipality');
+
 	Route::get('/dashboard', [HomeController::class, 'index'])->name('home')->middleware('auth');
 	Route::group(['middleware' => 'auth'], function () {
 		Route::get('/virtual-reality', [PageController::class, 'vr'])->name('virtual-reality');
@@ -57,6 +66,6 @@ use App\Http\Controllers\ChangePassword;
 		Route::get('/sign-up-static', [PageController::class, 'signup'])->name('sign-up-static'); 
 		Route::get('/{page}', [PageController::class, 'index'])->name('page');
 		Route::post('logout', [LoginController::class, 'logout'])->name('logout');
-		
-		
+		Route::post('/departmentos/store', [DepartmentController::class, 'storeWeb'])->name('saveDepartments');
+	    Route::post('/municipios/store', [MunicipalityController::class, 'store'])->middleware('auth')->name('storeMunicipalities');
 	});

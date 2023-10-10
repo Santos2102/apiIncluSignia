@@ -3,6 +3,7 @@
 @section('content')
     @include('layouts.navbars.auth.topnav', ['title' => 'Departamentos'])
     <div class="container-fluid py-4">
+        @include('components.alert')
         <div class="row">
             <div class="col-12">
                 <div class="card mb-4">
