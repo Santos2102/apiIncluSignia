@@ -94,9 +94,16 @@ class TeacherController extends Controller
      */
     public function edit($id)
     {
-        $teacher = Teacher::find(decrypt($id));
-
-        return view('teacher.edit', compact('teacher'));
+        try
+        {
+            $teacher = Teacher::where('teacherId',decrypt($id))->with('person')->first();
+            return view('teacher.edit', compact('teacher'));
+        }
+        catch(\Exception $e)
+        {
+            return back() -> with('error', 'Se produjo un error al procesar la solicitud');
+        }
+        
     }
 
     /**
@@ -106,14 +113,29 @@ class TeacherController extends Controller
      * @param  Teacher $teacher
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, Teacher $teacher)
+    public function update(Request $request, $id)
     {
-        request()->validate(Teacher::$rules);
-
-        $teacher->update($request->all());
-
-        return redirect()->route('teachers.index')
-            ->with('success', 'Teacher updated successfully');
+        try
+        {
+            $teacher = Teacher::where('teacherId',decrypt($id))->with('person')->first();
+            $person = Person::find($teacher -> person -> personId);
+            $person -> fill([
+            'name' => $request -> name,
+            'lastName' => $request -> lastname,
+            'cui' => $request -> cui,
+            'birthDate' => $request -> birthDate,
+            'age' => $request -> age
+            ]);
+            $person -> save();
+            return redirect()->route('docentes.index')
+                ->with('success', 'Docente actualizado correctamente');
+        }
+        catch(\Illuminate\Validation\ValidationException $e) {
+            DB::rollBack();
+            return back()->withErrors($e->validator->errors())->withInput();
+        }
+        //request()->validate(Teacher::$rules);
+        
     }
 
     /**
