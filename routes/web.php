@@ -7,7 +7,8 @@ use App\Http\Controllers\RegisterController;
 use App\Http\Controllers\LoginController;
 use App\Http\Controllers\UserProfileController;
 use App\Http\Controllers\ResetPassword;
-use App\Http\Controllers\ChangePassword;   
+use App\Http\Controllers\ChangePassword;
+use App\Http\Controllers\TeacherController; 
 
 /*
 |--------------------------------------------------------------------------
@@ -50,7 +51,8 @@ Route::group(['middleware' => 'auth'], function () {
     Route::get('/sign-in-static', [PageController::class, 'signin'])->name('sign-in-static');
     Route::get('/sign-up-static', [PageController::class, 'signup'])->name('sign-up-static');
 
+    Route::resource('/docentes',TeacherController::class);
+
     // Ruta genérica para páginas
     Route::get('/{page}', [PageController::class, 'index'])->name('page');
-	
 });
