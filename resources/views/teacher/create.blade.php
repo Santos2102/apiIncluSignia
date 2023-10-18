@@ -1,7 +1,4 @@
-@extends('layouts.app')
-@section('template_title')
-    {{ __('Create') }} Teacher
-@endsection
+@extends('layouts.app', ['class' => 'g-sidenav-show bg-gray-100'])
 
 @section('content')
     @include('layouts.navbars.auth.topnav', ['title' => 'Docentes'])
@@ -13,7 +10,7 @@
 
                 <div class="card card-default">
                     <div class="card-header">
-                        <span class="card-title">{{ __('Create') }} Teacher</span>
+                        <span class="card-title">{{ __('Crear') }} nuevo</span>
                     </div>
                     <div class="card-body">
                         <form method="POST" action="{{ route('docentes.store') }}"  role="form" enctype="multipart/form-data">

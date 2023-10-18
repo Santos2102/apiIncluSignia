@@ -20,10 +20,9 @@ class TeacherController extends Controller
      */
     public function index()
     {
-        $teachers = Teacher::paginate();
+        $teachers = Teacher::where('status','Active')->with('person')->get();
 
-        return view('teacher.index', compact('teachers'))
-            ->with('i', (request()->input('page', 1) - 1) * $teachers->perPage());
+        return view('teacher.index', compact('teachers'));
     }
 
     /**
@@ -65,9 +64,8 @@ class TeacherController extends Controller
             $teacher->save();
 
             DB::commit();
-            return "Exito";
-            // return redirect()->route('docentes.index')
-            //     ->with('success', 'Docente creado éxitosamente.');
+            return redirect()->route('docentes.index')
+                ->with('success', 'Docente creado éxitosamente.');
         }
         catch(\Illuminate\Validation\ValidationException $e) {
             DB::rollBack();
@@ -96,7 +94,7 @@ class TeacherController extends Controller
      */
     public function edit($id)
     {
-        $teacher = Teacher::find($id);
+        $teacher = Teacher::find(decrypt($id));
 
         return view('teacher.edit', compact('teacher'));
     }
@@ -125,9 +123,9 @@ class TeacherController extends Controller
      */
     public function destroy($id)
     {
-        $teacher = Teacher::find($id)->delete();
+        $teacher = Teacher::find(decrypt($id))->update(['status'=>'Inactive']);
 
-        return redirect()->route('teachers.index')
-            ->with('success', 'Teacher deleted successfully');
+        return redirect()->route('docentes.index')
+            ->with('success', 'Docente eliminado éxitosamente');
     }
 }
