@@ -34,7 +34,7 @@ class Teacher extends Model
      *
      * @var array
      */
-    protected $fillable = ['teacherId','status','personId','roleId'];
+    protected $fillable = ['teacherId','status','personId','roleId','email'];
     protected $primaryKey = 'teacherId';
 
     /**

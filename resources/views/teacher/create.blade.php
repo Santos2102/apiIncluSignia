@@ -48,7 +48,14 @@
                                     <div class="form-group">
                                         <label for="age">Edad</label>
                                         <input type="text" name="age" id="age" value="{{old('age')}}" required placeholder="Edad" class="form-control" readonly>
-                                        @error('cui')
+                                        @error('age')
+                                            <small class="text-danger">{{$message}}</small>
+                                        @enderror
+                                    </div>
+                                    <div class="form-group">
+                                        <label for="age">Correo</label>
+                                        <input type="email" name="email" id="email" value="{{old('email')}}" required placeholder="Correo" class="form-control">
+                                        @error('email')
                                             <small class="text-danger">{{$message}}</small>
                                         @enderror
                                     </div>

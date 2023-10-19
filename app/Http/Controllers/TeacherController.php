@@ -6,6 +6,9 @@ use App\Models\Teacher;
 use App\Models\Person;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Hash;
+use App\Models\User;
+use Carbon\Carbon;
 
 /**
  * Class TeacherController
@@ -70,17 +73,28 @@ class TeacherController extends Controller
                 'cui' => $request->cui,
             ]);
             $person->save();
-
-            //return $person;
             $teacher = new Teacher([
                 'personId' => $person->personId,
                 'roleId'=>2,
+                'email' => $request->email
             ]);
             $teacher->save();
 
+            $password = "Bienvenida".Carbon::now()->format('Y');
+            $user = new User([
+                'name' => $request->name,
+                'lastName' => $request->lastName,
+                'email' => $request->email,
+                'password' => $password,
+                'roleId'=>2
+            ]);
+
+            $user->save();
+
+
             DB::commit();
             return redirect()->route('docentes.index')
-                ->with('success', 'Docente creado éxitosamente.');
+                ->with('success', 'Docente registrado éxitosamente.');
         }
         catch(\Illuminate\Validation\ValidationException $e) {
             DB::rollBack();
@@ -134,6 +148,20 @@ class TeacherController extends Controller
         try
         {
             $teacher = Teacher::where('teacherId',decrypt($id))->with('person')->first();
+            $userData = User::where('email',$teacher->email)->first();
+            $user = User::find($userData->id);
+            $user->fill([
+                'name' => $request->name,
+                'lastname' => $request->lastname,
+                'email' => $request->email
+            ]);
+            $user->save();
+            if($teacher->email!=$request->email){
+                $teacher->fill([
+                    'email' => $request->email
+                ]);
+                $teacher->save();
+            }
             $person = Person::find($teacher -> person -> personId);
             $person -> fill([
             'name' => $request -> name,

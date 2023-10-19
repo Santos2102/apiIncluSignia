@@ -53,6 +53,13 @@
                                             <small class="text-danger">{{$message}}</small>
                                         @enderror
                                     </div>
+                                    <div class="form-group">
+                                        <label for="age">Correo</label>
+                                        <input type="email" name="email" id="email" value="{{$teacher->email}}" required placeholder="Correo" class="form-control">
+                                        @error('email')
+                                            <small class="text-danger">{{$message}}</small>
+                                        @enderror
+                                    </div>
 
                                 </div>
                                 <div class="box-footer mt20">
