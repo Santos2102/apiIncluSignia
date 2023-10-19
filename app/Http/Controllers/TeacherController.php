@@ -20,9 +20,17 @@ class TeacherController extends Controller
      */
     public function index()
     {
-        $teachers = Teacher::where('status','Active')->with('person')->get();
+        try 
+        {
+            $teachers = Teacher::where('status','Active')->with('person')->get();
 
-        return view('teacher.index', compact('teachers'));
+            return view('teacher.index', compact('teachers'));
+        }
+        catch(\Exception $e)
+        {
+            return back() -> with('error', 'Se produjo un error al procesar la solicitud');
+        }
+        
     }
 
     /**
@@ -32,8 +40,15 @@ class TeacherController extends Controller
      */
     public function create()
     {
-        $teacher = new Teacher();
-        return view('teacher.create', compact('teacher'));
+        try
+        {
+            return view('teacher.create');
+        }
+        catch(\Exception $e)
+        {
+            return back() -> with('error', 'Se produjo un error al procesar la solicitud');
+        }
+        
     }
 
     /**
@@ -115,6 +130,7 @@ class TeacherController extends Controller
      */
     public function update(Request $request, $id)
     {
+        DB::beginTransaction();
         try
         {
             $teacher = Teacher::where('teacherId',decrypt($id))->with('person')->first();
@@ -127,6 +143,7 @@ class TeacherController extends Controller
             'age' => $request -> age
             ]);
             $person -> save();
+            DB::commit();
             return redirect()->route('docentes.index')
                 ->with('success', 'Docente actualizado correctamente');
         }
@@ -145,9 +162,16 @@ class TeacherController extends Controller
      */
     public function destroy($id)
     {
-        $teacher = Teacher::find(decrypt($id))->update(['status'=>'Inactive']);
+        try
+        {
+            $teacher = Teacher::find(decrypt($id))->update(['status'=>'Inactive']);
 
         return redirect()->route('docentes.index')
             ->with('success', 'Docente eliminado éxitosamente');
+        }
+        catch(\Exception $e)
+        {
+            return back() -> with('error', 'Se produjo un error al procesar la solicitud');
+        }
     }
 }

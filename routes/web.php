@@ -9,6 +9,7 @@ use App\Http\Controllers\UserProfileController;
 use App\Http\Controllers\ResetPassword;
 use App\Http\Controllers\ChangePassword;
 use App\Http\Controllers\TeacherController; 
+use App\Http\Controllers\StudentController; 
 
 /*
 |--------------------------------------------------------------------------
@@ -52,6 +53,7 @@ Route::group(['middleware' => 'auth'], function () {
     Route::get('/sign-up-static', [PageController::class, 'signup'])->name('sign-up-static');
 
     Route::resource('/docentes',TeacherController::class);
+    Route::resource('/estudiantes',StudentController::class);
 
     // Ruta genérica para páginas
     Route::get('/{page}', [PageController::class, 'index'])->name('page');
