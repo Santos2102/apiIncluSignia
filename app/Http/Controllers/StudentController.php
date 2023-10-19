@@ -61,7 +61,9 @@ class StudentController extends Controller
     {
         DB::beginTransaction();
         try{
-            //request()->validate(Teacher::$rules);
+            $request->validate([
+                'cui'=> 'required|unique:persons|string|min:15|max:15'
+            ]);
             $person = new Person([
                 'name' => $request->name,
                 'lastName' => $request->lastname,

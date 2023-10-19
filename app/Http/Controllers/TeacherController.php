@@ -64,6 +64,10 @@ class TeacherController extends Controller
     {
         DB::beginTransaction();
         try{
+            $request->validate([
+                'email' => 'required|unique:teachers|string|max:255',
+                'cui'=> 'required|unique:persons|string|min:15|max:15'
+            ]);
             //request()->validate(Teacher::$rules);
             $person = new Person([
                 'name' => $request->name,
