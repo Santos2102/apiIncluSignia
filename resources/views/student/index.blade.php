@@ -44,31 +44,35 @@
                                     </tr>
                                 </thead>
                                 <tbody>
-                                    @php
-                                        $i=0;
-                                    @endphp
-                                    @foreach ($students as $student)
-                                        <tr>
-                                            <td>{{ ++$i }}</td>
-                                            <td>{{ $student->code }}</td>
-											<td>{{ $student->person->name }}</td>
-											<td>{{ $student->person->lastName }}</td>
-                                            <td>{{ $student->person->cui }}</td>
-                                            <td>{{ Carbon\Carbon::parse($student->person->birthDate)->format('d-m-Y') }}</td>
-                                            <td>{{ $student->person->age }}</td>
-                                            <td>{{ $student->grade }}</td>
-                                            <td>{{ $student->disability->disabilityName}}</td>
+                                    @if(count($students)==0)
+                                    <th colspan="11" style="text-align:center;">SIN ESTUDIANTES REGISTRADOS</th>
+                                    @else
+                                        @php
+                                            $i=0;
+                                        @endphp
+                                        @foreach ($students as $student)
+                                            <tr>
+                                                <td>{{ ++$i }}</td>
+                                                <td>{{ $student->code }}</td>
+                                                <td>{{ $student->person->name }}</td>
+                                                <td>{{ $student->person->lastName }}</td>
+                                                <td>{{ $student->person->cui }}</td>
+                                                <td>{{ Carbon\Carbon::parse($student->person->birthDate)->format('d-m-Y') }}</td>
+                                                <td>{{ $student->person->age }}</td>
+                                                <td>{{ $student->grade }}</td>
+                                                <td>{{ $student->disability->disabilityName}}</td>
 
-                                            <td>
-                                                <form action="{{ route('estudiantes.destroy',encrypt($student->studentId)) }}" method="POST">
-                                                    <a class="btn btn-sm btn-success" href="{{ route('estudiantes.edit',encrypt($student->studentId)) }}"><i class="fa fa-fw fa-edit"></i> {{ __('Editar') }}</a>
-                                                    @csrf
-                                                    @method('DELETE')
-                                                    <button type="submit" class="btn btn-danger btn-sm" onclick="return eliminarEstudiante('Eliminar estudiante')"><i class="fa fa-fw fa-trash"></i> {{ __('Eliminar') }}</button>
-                                                </form>
-                                            </td>
-                                        </tr>
-                                    @endforeach
+                                                <td>
+                                                    <form action="{{ route('estudiantes.destroy',encrypt($student->studentId)) }}" method="POST">
+                                                        <a class="btn btn-sm btn-success" href="{{ route('estudiantes.edit',encrypt($student->studentId)) }}"><i class="fa fa-fw fa-edit"></i> {{ __('Editar') }}</a>
+                                                        @csrf
+                                                        @method('DELETE')
+                                                        <button type="submit" class="btn btn-danger btn-sm" onclick="return eliminarEstudiante('Eliminar estudiante')"><i class="fa fa-fw fa-trash"></i> {{ __('Eliminar') }}</button>
+                                                    </form>
+                                                </td>
+                                            </tr>
+                                        @endforeach
+                                    @endif
                                 </tbody>
                             </table>
                         </div>

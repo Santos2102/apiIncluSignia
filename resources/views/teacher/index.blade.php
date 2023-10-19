@@ -41,30 +41,34 @@
                                     </tr>
                                 </thead>
                                 <tbody>
-                                    @php
-                                        $i=0;
-                                    @endphp
-                                    @foreach ($teachers as $teacher)
-                                        <tr>
-                                            <td>{{ ++$i }}</td>
-                                            
-											<td>{{ $teacher->person->name }}</td>
-											<td>{{ $teacher->person->lastName }}</td>
-                                            <td>{{ $teacher->person->cui }}</td>
-                                            <td>{{ Carbon\Carbon::parse($teacher->person->birthDate)->format('d-m-Y') }}</td>
-                                            <td>{{ $teacher->person->age }}</td>
+                                    @if(count($teachers)==0)
+                                        <th colspan="7" style="text-align:center;">SIN DOCENTES REGISTRADOS</th>
+                                    @else
+                                        @php
+                                            $i=0;
+                                        @endphp
+                                        @foreach ($teachers as $teacher)
+                                            <tr>
+                                                <td>{{ ++$i }}</td>
+                                                
+                                                <td>{{ $teacher->person->name }}</td>
+                                                <td>{{ $teacher->person->lastName }}</td>
+                                                <td>{{ $teacher->person->cui }}</td>
+                                                <td>{{ Carbon\Carbon::parse($teacher->person->birthDate)->format('d-m-Y') }}</td>
+                                                <td>{{ $teacher->person->age }}</td>
 
 
-                                            <td>
-                                                <form action="{{ route('docentes.destroy',encrypt($teacher->teacherId)) }}" method="POST">
-                                                    <a class="btn btn-sm btn-success" href="{{ route('docentes.edit',encrypt($teacher->teacherId)) }}"><i class="fa fa-fw fa-edit"></i> {{ __('Editar') }}</a>
-                                                    @csrf
-                                                    @method('DELETE')
-                                                    <button type="submit" class="btn btn-danger btn-sm" onclick="return eliminarDocente('Eliminar docente')"><i class="fa fa-fw fa-trash"></i> {{ __('Eliminar') }}</button>
-                                                </form>
-                                            </td>
-                                        </tr>
-                                    @endforeach
+                                                <td>
+                                                    <form action="{{ route('docentes.destroy',encrypt($teacher->teacherId)) }}" method="POST">
+                                                        <a class="btn btn-sm btn-success" href="{{ route('docentes.edit',encrypt($teacher->teacherId)) }}"><i class="fa fa-fw fa-edit"></i> {{ __('Editar') }}</a>
+                                                        @csrf
+                                                        @method('DELETE')
+                                                        <button type="submit" class="btn btn-danger btn-sm" onclick="return eliminarDocente('Eliminar docente')"><i class="fa fa-fw fa-trash"></i> {{ __('Eliminar') }}</button>
+                                                    </form>
+                                                </td>
+                                            </tr>
+                                        @endforeach
+                                    @endif    
                                 </tbody>
                             </table>
                         </div>
