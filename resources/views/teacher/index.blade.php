@@ -34,6 +34,7 @@
 										<th>Nombre</th>
 										<th>Apellido</th>
 										<th>CUI</th>
+                                        <th>Correo</th>
 										<th>Fecha de nacimiento</th>
                                         <th>Edad</th>
 
@@ -54,6 +55,7 @@
                                                 <td>{{ $teacher->person->name }}</td>
                                                 <td>{{ $teacher->person->lastName }}</td>
                                                 <td>{{ $teacher->person->cui }}</td>
+                                                <td>{{ $teacher->email }}</td>
                                                 <td>{{ Carbon\Carbon::parse($teacher->person->birthDate)->format('d-m-Y') }}</td>
                                                 <td>{{ $teacher->person->age }}</td>
 
