@@ -79,7 +79,6 @@ class TeacherController extends Controller
             $person->save();
             $teacher = new Teacher([
                 'personId' => $person->personId,
-                'roleId'=>2,
                 'email' => $request->email
             ]);
             $teacher->save();
@@ -90,7 +89,6 @@ class TeacherController extends Controller
                 'lastName' => $request->lastName,
                 'email' => $request->email,
                 'password' => $password,
-                'roleId'=>2
             ]);
 
             $user->save();

@@ -77,8 +77,7 @@ class DiagnosticController extends Controller
                 'studentId' => $studentId
             ]);
             $diagnostic->save();
-            return redirect()->route('practicas.index')
-            ->with('success', 'Diagnóstico creado exitosamente.');
+            return redirect()->route('practicas.show', ['practica' => encrypt($studentId)])->with('success', 'Diagnostico actualizado exitosamente');
         }
         catch(\Illuminate\Validation\ValidationException $e) {
             //DB::rollBack();
@@ -96,7 +95,8 @@ class DiagnosticController extends Controller
     {
         try{
             $diagnostics = Diagnostic::where('studentId',decrypt($id))->get();
-            return view('diagnostic.show', compact('diagnostics'));
+            $student = Student::where('studentId',decrypt($id))->with('person')->first();
+            return view('diagnostic.show', compact('diagnostics','student'));
         }
         catch(\Exception $e){
             return redirect()->back()->with('error','Se produjo un error al procesar la solicitud');
@@ -157,8 +157,7 @@ class DiagnosticController extends Controller
                 'studentId' => $studentId
             ]);
             $diagnosticFinal->save();
-            return redirect()->route('practicas.index')
-            ->with('success', 'Diagnóstico actualizado exitosamente');
+            return redirect()->route('practicas.show', ['practica' => encrypt($studentId)])->with('success', 'Diagnostico actualizado exitosamente');
         }
         catch(\Illuminate\Validation\ValidationException $e) {
             //DB::rollBack();

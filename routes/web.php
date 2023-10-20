@@ -11,6 +11,7 @@ use App\Http\Controllers\ChangePassword;
 use App\Http\Controllers\TeacherController; 
 use App\Http\Controllers\StudentController;
 use App\Http\Controllers\DiagnosticController;
+use App\Http\Controllers\TestController;
 
 /*
 |--------------------------------------------------------------------------
@@ -56,6 +57,7 @@ Route::group(['middleware' => 'auth'], function () {
     Route::resource('/docentes',TeacherController::class);
     Route::resource('/estudiantes',StudentController::class);
     Route::resource('/practicas',DiagnosticController::class);
+    Route::resource('/evaluaciones', TestController::class);
 
     // Ruta genérica para páginas
     Route::get('/{page}', [PageController::class, 'index'])->name('page');

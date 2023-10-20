@@ -64,6 +64,8 @@
 
                                                 <td>
                                                     <form action="{{ route('estudiantes.destroy',encrypt($student->studentId)) }}" method="POST">
+                                                        <a class="btn btn-sm btn-primary " href="{{route('practicas.show',encrypt($student->studentId))}}"><i class="fa fa-fw fa-book"></i> {{ __('Practicas') }}</a>
+                                                        <a class="btn btn-sm btn-info " href="{{route('evaluaciones.show',encrypt($student->studentId))}}"><i class="fa fa-fw fa-check"></i> {{ __('Evaluaciones') }}</a>
                                                         <a class="btn btn-sm btn-success" href="{{ route('estudiantes.edit',encrypt($student->studentId)) }}"><i class="fa fa-fw fa-edit"></i> {{ __('Editar') }}</a>
                                                         @csrf
                                                         @method('DELETE')
