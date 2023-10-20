@@ -23,7 +23,7 @@
                                     <tr>
                                         <th>No</th>
                                         
-										<th>Fecha</th>
+										<th>Fecha y hora</th>
                                         <th>Nivel</th>
                                         <th>Punteo</th>
                                         <th></th>
@@ -37,7 +37,7 @@
                                         <tr>
                                             <td>{{ ++$i }}</td>
                                             
-											<td>{{ Carbon\Carbon::parse($test->created_at)->format('d-m-Y') }}</td>
+											<td>{{ Carbon\Carbon::parse($test->created_at)->format('d-m-Y H:s') }}</td>
                                             <td>{{ $test->level }}</td>
                                             <td class="align-middle text-center">
                                                 <div class="d-flex align-items-center justify-content-center">

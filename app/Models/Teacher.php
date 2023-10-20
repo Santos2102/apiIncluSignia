@@ -34,7 +34,7 @@ class Teacher extends Model
      *
      * @var array
      */
-    protected $fillable = ['teacherId','status','personId','email'];
+    protected $fillable = ['teacherId','status','personId','email','created_at', 'updated_at'];
     protected $primaryKey = 'teacherId';
 
     /**
@@ -47,5 +47,7 @@ class Teacher extends Model
     
     /**
      * @return \Illuminate\Database\Eloquent\Relations\HasOne
-     */    
+     */
+    
+
 }
