@@ -64,3 +64,12 @@ If you discover a security vulnerability within Laravel, please send an e-mail t
 ## License
 
 The Laravel framework is open-sourced software licensed under the [MIT license](https://opensource.org/licenses/MIT).
+
+## Roles y permisos
+Instalar el paquete de spatie mediante el comando composer require spatie/laravel-permission
+
+## Publicar las vistas
+Publicar las vistas mediante el comando php artisan vendor:publish --provider="Spatie\Permission\PermissionServiceProvider"
+
+## Relaciones entre usuarios y roles
+Agregar el trait al modelo User mediante mediante la línea use Spatie\Permission\Traits\HasPermissions;. A continuación, llamar al trait dentro de la clase User mediante la línea use HasRoles;
