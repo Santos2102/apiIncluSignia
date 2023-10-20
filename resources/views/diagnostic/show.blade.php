@@ -8,10 +8,10 @@
                 <div class="card">
                     <div class="card-header">
                         <div class="float-left">
-                            <span class="card-title">{{ __('Listado de ') }} prácticas</span>
+                            <span class="card-title">{{ __('Listado de ') }} prácticas de {{$student -> person -> name. ' ' . $student -> person -> lastName }}</span>
                         </div>
                         <div class="float-right">
-                            <a class="btn btn-primary" href="{{ route('practicas.index') }}"> {{ __('Regresar') }}</a>
+                            <a class="btn btn-primary" href="{{ route('estudiantes.index') }}"> {{ __('Regresar') }}</a>
                         </div>
                     </div>
 
@@ -22,7 +22,6 @@
                                 <thead class="thead">
                                     <tr>
                                         <th>No</th>
-                                        
 										<th>Fecha</th>
                                         <th>Diagnóstico</th>
 
