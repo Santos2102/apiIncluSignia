@@ -9,7 +9,8 @@ use App\Http\Controllers\UserProfileController;
 use App\Http\Controllers\ResetPassword;
 use App\Http\Controllers\ChangePassword;
 use App\Http\Controllers\TeacherController; 
-use App\Http\Controllers\StudentController; 
+use App\Http\Controllers\StudentController;
+use App\Http\Controllers\DiagnosticController;
 
 /*
 |--------------------------------------------------------------------------
@@ -54,6 +55,7 @@ Route::group(['middleware' => 'auth'], function () {
 
     Route::resource('/docentes',TeacherController::class);
     Route::resource('/estudiantes',StudentController::class);
+    Route::resource('/practicas',DiagnosticController::class);
 
     // Ruta genérica para páginas
     Route::get('/{page}', [PageController::class, 'index'])->name('page');

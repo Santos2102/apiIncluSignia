@@ -2,17 +2,50 @@
 
 namespace App\Models;
 
-use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
+/**
+ * Class Diagnostic
+ *
+ * @property $diagnosticsId
+ * @property $diagnostic
+ * @property $date
+ * @property $studentId
+ * @property $created_at
+ * @property $updated_at
+ *
+ * @property Student $student
+ * @package App
+ * @mixin \Illuminate\Database\Eloquent\Builder
+ */
 class Diagnostic extends Model
 {
-    use HasFactory;
-    protected $table = 'diagnostics';
-    protected $fillable = ['diagnosticsId','diagnostic','date','studentId','created_at','updated_at'];
+    
+    static $rules = [
+		'diagnosticsId' => 'required',
+		'diagnostic' => 'required',
+		'date' => 'required',
+		'studentId' => 'required',
+    ];
+
+    protected $perPage = 20;
     protected $primaryKey = 'diagnosticsId';
 
-    public function students(){
-        return $this->hasMany('App\Models\Student');
+    /**
+     * Attributes that should be mass-assignable.
+     *
+     * @var array
+     */
+    protected $fillable = ['diagnosticsId','diagnostic','date','studentId'];
+
+
+    /**
+     * @return \Illuminate\Database\Eloquent\Relations\HasOne
+     */
+    public function student()
+    {
+        return $this->hasOne('App\Models\Student', 'studentId', 'studentId');
     }
+    
+
 }
