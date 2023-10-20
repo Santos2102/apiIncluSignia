@@ -67,3 +67,9 @@ The Laravel framework is open-sourced software licensed under the [MIT license](
 
 ## Roles y permisos
 Instalar el paquete de spatie mediante el comando composer require spatie/laravel-permission
+
+## Publicar las vistas
+Publicar las vistas mediante el comando php artisan vendor:publish --provider="Spatie\Permission\PermissionServiceProvider"
+
+## Relaciones entre usuarios y roles
+Agregar el trait al modelo User mediante mediante la línea use Spatie\Permission\Traits\HasPermissions;. A continuación, llamar al trait dentro de la clase User mediante la línea use HasRoles;
