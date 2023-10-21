@@ -54,7 +54,7 @@ class TestController extends Controller
         try{
             $request->validate([
                 'code'=>'required|string|min:10|max:10',
-                'score'=>'required',
+                'score'=>'required|numeric|min:0|max:100',
                 'level'=>'required'
             ]);
             $student = Student::where('code',$request->code)->first();
@@ -129,8 +129,8 @@ class TestController extends Controller
         try{
             $request->validate([
                 'code'=>'required|string|min:10|max:10',
-                'level'=>'required',
-                'score'=>'required'
+                'score'=>'required|numeric|min:0|max:100',
+                'level'=>'required'
             ]);
             $test = Test::where('testId',decrypt($id))->with('student')->first();
             $studentId = $test->student->studentId;

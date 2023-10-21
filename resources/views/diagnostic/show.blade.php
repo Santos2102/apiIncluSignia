@@ -29,21 +29,29 @@
                                     </tr>
                                 </thead>
                                 <tbody>
+
                                     @php
                                         $i=0;
                                     @endphp
-                                    @foreach ($diagnostics as $diagnostic)
-                                        <tr>
-                                            <td>{{ ++$i }}</td>
-                                            
-											<td>{{ Carbon\Carbon::parse($diagnostic->date)->format('d-m-Y') }}</td>
-                                            <td>{{ $diagnostic->diagnostic }}</td>
 
-                                            <td>
-                                                <a class="btn btn-sm btn-success " href="{{route('practicas.edit',encrypt($diagnostic->diagnosticsId))}}"><i class="fa fa-fw fa-edit"></i> {{ __('Editar') }}</a>
-                                            </td>
-                                        </tr>
-                                    @endforeach
+                                    @if(count($diagnostics)<=0)
+                                        <th colspan="4" style="text-align:center;">SIN PRÁCTICAS REGISTRADAS</th>
+                                    @else
+                                        @foreach ($diagnostics as $diagnostic)
+                                            <tr>
+                                                <td>{{ ++$i }}</td>
+                                                
+                                                <td>{{ Carbon\Carbon::parse($diagnostic->date)->format('d-m-Y') }}</td>
+                                                <td>{{ $diagnostic->diagnostic }}</td>
+
+                                                <td>
+                                                    @can('Editar practica')
+                                                        <a class="btn btn-sm btn-success " href="{{route('practicas.edit',encrypt($diagnostic->diagnosticsId))}}"><i class="fa fa-fw fa-edit"></i> {{ __('Editar') }}</a>
+                                                    @endcan
+                                                </td>
+                                            </tr>
+                                        @endforeach
+                                    @endif
                                 </tbody>
                             </table>
                         </div>

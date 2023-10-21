@@ -42,8 +42,8 @@
                                         @enderror
                                     </div>
                                     <div class="form-group">
-                                        <label for="diagnostic">Score</label>
-                                        <input type="text" name="score" id="score" value="{{old('score')}}" required placeholder="Punteo" class="form-control">
+                                        <label for="diagnostic">Punteo</label>
+                                        <input type="number" name="score" id="score" value="{{old('score')}}" required placeholder="Punteo" class="form-control">
                                         @error('score')
                                             <small class="text-danger">{{$message}}</small>
                                         @enderror
