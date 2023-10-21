@@ -2,26 +2,22 @@
 
 namespace Database\Seeders;
 
+// use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
-use Illuminate\Support\Facades\DB;
 use App\Models\User;
 
-
-class DatabaseSeeder extends Seeder
+class UserSeeder extends Seeder
 {
     /**
-     * Seed the application's database.
-     *
-     * @return void
+     * Run the database seeds.
      */
-    public function run()
+    public function run(): void
     {
-        $this->call(RoleSeeder::class);
         User::create([
             'firstname' => 'Admin',
             'lastname' => 'Admin',
             'email' => 'admin@argon.com',
-            'password' => 'Bienvenida2023'
+            'password' => bcrypt('Bienvenida2023')
         ])->assignRole('Administrador');
     }
 }

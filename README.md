@@ -75,7 +75,7 @@ Publicar las vistas mediante el comando php artisan vendor:publish --provider="S
 Agregar el trait al modelo User mediante mediante la línea use Spatie\Permission\Traits\HasRoles;. A continuación, llamar al trait dentro de la clase User mediante la línea use HasRoles;
 
 ## Crear el seeder para roles
-Mediante el comando php artisan make:seeder RoleSeeder
+Mediante el comando php artisan make:seeder RoleSeeder. En el seeder Database, llamar al seeder role a través de la siguiente línea de código $this->call(RoleSeeder::class);.
 
 ## Ejecutar el seeder
 Abrir una terminal y ejecutar el comando php artisan migrate:fresh --seed

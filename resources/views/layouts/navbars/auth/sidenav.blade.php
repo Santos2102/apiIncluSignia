@@ -95,6 +95,7 @@
                     <span class="nav-link-text ms-1">Nuevo</span>
                 </a>
             </li>
+            @can('Crear evaluacion')
             <li class="nav-item">
                 <a class="nav-link" href="{{route('evaluaciones.create')}}">
                     <div
@@ -104,6 +105,7 @@
                     <span class="nav-link-text ms-1">Evaluación</span>
                 </a>
             </li>
+            @endcan
             <li class="nav-item">
                 <a class="nav-link" href="{{route('practicas.create')}}">
                     <div

@@ -17,17 +17,17 @@ class RoleSeeder extends Seeder
         $roleAdministrador = Role::create(['name' => 'Administrador']);
         $roleTeacher = Role::create(['name' => 'Teacher']);
 
-        Permission::create(['name'=>'Ver docentes']);
-        Permission::create(['name'=>'Crear docentes']);
-        Permission::create(['name'=>'Ver estudiantes']);
-        Permission::create(['name'=>'Crear estudiantes']);
-        Permission::create(['name'=>'Editar estudiantes']);
-        Permission::create(['name'=>'Eliminar estudiantes']);
-        Permission::create(['name'=>'Crear evaluacion']);
-        Permission::create(['name'=>'Crear practica']);
-        Permission::create(['name'=>'Ver evaluacion']);
-        Permission::create(['name'=>'Ver practica']);
-        Permission::create(['name'=>'Editar practica']);
-        Permission::create(['name'=>'Editar evaluacion']);
+        Permission::create(['name'=>'Ver docentes'])->assignRole($roleAdministrador);
+        Permission::create(['name'=>'Crear docentes'])->assignRole($roleAdministrador);
+        Permission::create(['name'=>'Ver estudiantes'])->syncRoles([$roleTeacher,$roleAdministrador]);
+        Permission::create(['name'=>'Crear estudiantes'])->syncRoles([$roleTeacher,$roleAdministrador]);;
+        Permission::create(['name'=>'Editar estudiantes'])->syncRoles([$roleTeacher,$roleAdministrador]);;
+        Permission::create(['name'=>'Eliminar estudiantes'])->assignRole($roleAdministrador);
+        Permission::create(['name'=>'Crear evaluacion'])->assignRole($roleTeacher);
+        Permission::create(['name'=>'Crear practica'])->assignRole($roleTeacher);
+        Permission::create(['name'=>'Ver evaluacion'])->syncRoles([$roleTeacher,$roleAdministrador]);
+        Permission::create(['name'=>'Ver practica'])->syncRoles([$roleTeacher,$roleAdministrador]);
+        Permission::create(['name'=>'Editar practica'])->assignRole($roleTeacher);
+        Permission::create(['name'=>'Editar evaluacion'])->assignRole($roleTeacher);
     }
 }
