@@ -5,12 +5,11 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Model;
 
 /**
- * Class Test
+ * Class Diagnostic
  *
- * @property $testId
- * @property $level
- * @property $score
- * @property $dateTime
+ * @property $diagnosticsId
+ * @property $diagnostic
+ * @property $date
  * @property $studentId
  * @property $created_at
  * @property $updated_at
@@ -19,25 +18,25 @@ use Illuminate\Database\Eloquent\Model;
  * @package App
  * @mixin \Illuminate\Database\Eloquent\Builder
  */
-class Test extends Model
+class Diagnostic extends Model
 {
     
     static $rules = [
-		'testId' => 'required',
-		'level' => 'required',
-		'score' => 'required',
-		'dateTime' => 'required',
+		'diagnosticsId' => 'required',
+		'diagnostic' => 'required',
+		'date' => 'required',
+		'studentId' => 'required',
     ];
 
     protected $perPage = 20;
+    protected $primaryKey = 'diagnosticsId';
 
     /**
      * Attributes that should be mass-assignable.
      *
      * @var array
      */
-    protected $fillable = ['testId','level','score','dateTime','studentId'];
-    protected $primaryKey = 'testId';
+    protected $fillable = ['diagnosticsId','diagnostic','date','studentId'];
 
 
     /**
