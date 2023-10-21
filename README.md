@@ -72,4 +72,7 @@ Instalar el paquete de spatie mediante el comando composer require spatie/larave
 Publicar las vistas mediante el comando php artisan vendor:publish --provider="Spatie\Permission\PermissionServiceProvider"
 
 ## Relaciones entre usuarios y roles
-Agregar el trait al modelo User mediante mediante la línea use Spatie\Permission\Traits\HasPermissions;. A continuación, llamar al trait dentro de la clase User mediante la línea use HasRoles;
+Agregar el trait al modelo User mediante mediante la línea use Spatie\Permission\Traits\HasRoles;. A continuación, llamar al trait dentro de la clase User mediante la línea use HasRoles;
+
+## Crear el seeder para roles
+Mediante el comando php artisan make:seeder RoleSeeder
