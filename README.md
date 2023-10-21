@@ -76,3 +76,6 @@ Agregar el trait al modelo User mediante mediante la línea use Spatie\Permissio
 
 ## Crear el seeder para roles
 Mediante el comando php artisan make:seeder RoleSeeder
+
+## Ejecutar el seeder
+Abrir una terminal y ejecutar el comando php artisan migrate:fresh --seed
