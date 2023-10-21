@@ -85,13 +85,14 @@ class TeacherController extends Controller
 
             $password = "Bienvenida".Carbon::now()->format('Y');
             $user = new User([
-                'name' => $request->name,
-                'lastName' => $request->lastName,
+                'firstname' => $request->name,
+                'lastname' => $request->lastName,
                 'email' => $request->email,
                 'password' => $password,
             ]);
 
             $user->save();
+            $user->assignRole('Teacher');
 
 
             DB::commit();

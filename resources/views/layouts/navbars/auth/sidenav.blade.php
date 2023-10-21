@@ -44,9 +44,11 @@
                     <span class="nav-link-text ms-1">User Management</span>
                 </a>
             </li>
+            @can('Ver docentes')
             <li class="nav-item mt-3">
                 <h6 class="ps-4 ms-2 text-uppercase text-xs font-weight-bolder opacity-6">Docentes</h6>
             </li>
+            
             <li class="nav-item">
                 <a class="nav-link" href="{{route('docentes.index')}}">
                     <div
@@ -56,6 +58,8 @@
                     <span class="nav-link-text ms-1">Ver</span>
                 </a>
             </li>
+            @endcan
+            @can('Crear docentes')
             <li class="nav-item">
                 <a class="nav-link" href="{{route('docentes.create')}}">
                     <div
@@ -65,6 +69,7 @@
                     <span class="nav-link-text ms-1">Nuevo</span>
                 </a>
             </li>
+            @endcan
             <li class="nav-item">
                 <a class="nav-link {{ str_contains(request()->url(), 'tables') == true ? 'active' : '' }}" href="{{ route('page', ['page' => 'tables']) }}">
                     <div
@@ -77,6 +82,7 @@
             <li class="nav-item mt-3">
                 <h6 class="ps-4 ms-2 text-uppercase text-xs font-weight-bolder opacity-6">Estudiantes</h6>
             </li>
+            @can('Ver estudiantes')
             <li class="nav-item">
                 <a class="nav-link" href="{{route('estudiantes.index')}}">
                     <div
@@ -86,6 +92,8 @@
                     <span class="nav-link-text ms-1">Ver</span>
                 </a>
             </li>
+            @endcan
+            @can('Crear estudiantes')
             <li class="nav-item">
                 <a class="nav-link" href="{{route('estudiantes.create')}}">
                     <div
@@ -95,6 +103,7 @@
                     <span class="nav-link-text ms-1">Nuevo</span>
                 </a>
             </li>
+            @endcan
             @can('Crear evaluacion')
             <li class="nav-item">
                 <a class="nav-link" href="{{route('evaluaciones.create')}}">
@@ -106,6 +115,7 @@
                 </a>
             </li>
             @endcan
+            @can('Crear practica')
             <li class="nav-item">
                 <a class="nav-link" href="{{route('practicas.create')}}">
                     <div
@@ -115,6 +125,7 @@
                     <span class="nav-link-text ms-1">Práctica</span>
                 </a>
             </li>
+            @endcan
            
             
             <li class="nav-item mt-3">

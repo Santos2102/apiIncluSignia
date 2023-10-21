@@ -33,30 +33,37 @@
                                     @php
                                         $i=0;
                                     @endphp
-                                    @foreach ($tests as $test)
-                                        <tr>
-                                            <td>{{ ++$i }}</td>
-                                            
-											<td>{{ Carbon\Carbon::parse($test->created_at)->format('d-m-Y H:s') }}</td>
-                                            <td>{{ $test->level }}</td>
-                                            <td class="align-middle text-center">
-                                                <div class="d-flex align-items-center justify-content-center">
-                                                    <span class="me-2 text-xs font-weight-bold">{{$test->score}}%</span>
-                                                    <div>
-                                                        <div class="progress">
-                                                            <div class="progress-bar bg-gradient-info" role="progressbar"
-                                                                aria-valuenow="{{$test->score}}" aria-valuemin="0" aria-valuemax="{{$test->score}}"
-                                                                style="width: {{$test->score}}%;">
+                                    
+                                    @if(count($tests)<=0)
+                                        <th colspan="5" style="text-align:center;">SIN EVALUACIONES REGISTRADAS</th>
+                                    @else
+                                        @foreach ($tests as $test)
+                                            <tr>
+                                                <td>{{ ++$i }}</td>
+                                                
+                                                <td>{{ Carbon\Carbon::parse($test->created_at)->format('d-m-Y H:s') }}</td>
+                                                <td>{{ $test->level }}</td>
+                                                <td class="align-middle text-center">
+                                                    <div class="d-flex align-items-center justify-content-center">
+                                                        <span class="me-2 text-xs font-weight-bold">{{$test->score}}%</span>
+                                                        <div>
+                                                            <div class="progress">
+                                                                <div class="progress-bar bg-gradient-info" role="progressbar"
+                                                                    aria-valuenow="{{$test->score}}" aria-valuemin="0" aria-valuemax="{{$test->score}}"
+                                                                    style="width: {{$test->score}}%;">
+                                                                </div>
                                                             </div>
                                                         </div>
                                                     </div>
-                                                </div>
-                                            </td>
-                                            <td>
-                                                <a class="btn btn-sm btn-success " href="{{route('evaluaciones.edit',encrypt($test->testId))}}"><i class="fa fa-fw fa-edit"></i> {{ __('Editar') }}</a>
-                                            </td>
-                                        </tr>
-                                    @endforeach
+                                                </td>
+                                                <td>
+                                                    @can('Editar evaluacion')
+                                                        <a class="btn btn-sm btn-success " href="{{route('evaluaciones.edit',encrypt($test->testId))}}"><i class="fa fa-fw fa-edit"></i> {{ __('Editar') }}</a>
+                                                    @endcan        
+                                                </td>
+                                            </tr>
+                                        @endforeach
+                                    @endif
                                 </tbody>
                             </table>
                         </div>
