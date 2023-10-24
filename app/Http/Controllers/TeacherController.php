@@ -86,7 +86,7 @@ class TeacherController extends Controller
             $password = "Bienvenida".Carbon::now()->format('Y');
             $user = new User([
                 'firstname' => $request->name,
-                'lastname' => $request->lastName,
+                'lastname' => $request->lastname,
                 'email' => $request->email,
                 'password' => $password,
             ]);
