@@ -74,6 +74,8 @@
 
 
     <script type="text/javascript">
+        let contadorCuatro = 0;
+        let contadorCinco = 0;
         $(document).ready(function() {
             
             $('#birthDate').on('change', function() {
@@ -90,6 +92,54 @@
                     return edad;
                 }
                 document.getElementById('age').value = calcularEdad(document.getElementById('birthDate').value);
+            });
+
+                $('#cui').on('keydown',function(){
+                var obtenerCui = document.getElementById('cui');
+                var codigo = event.which || event.keyCode;
+                if(obtenerCui.value.length==0){
+                    contadorCuatro=0;
+                    contadorCinco=0;
+                }
+                if(obtenerCui.value.length <=14){
+                    if(codigo >=96 && codigo <= 105 || codigo >=48 && codigo <= 57){
+                        if(obtenerCui.value.length<=4){
+                            contadorCuatro++;
+                        }
+                        if((obtenerCui.value.length>5 && obtenerCui.value.length<10) && contadorCinco<5){
+                            contadorCinco++;
+                        }
+                    }
+                    else if(codigo == 8){
+                        if((contadorCuatro > 0 && contadorCuatro < 5) && (obtenerCui.value.length>-1 && obtenerCui.value.length<5)){
+                            contadorCuatro--;
+                        }
+                        if((contadorCinco > 0 && contadorCinco < 6) && (obtenerCui.value.length>5 && obtenerCui.value.length<11)){
+                            contadorCinco--;
+                        }
+                    }
+                    if(obtenerCui.value.length==4 && contadorCuatro==5){
+                        document.getElementById('cui').value = document.getElementById('cui').value+"-";
+                        contadorCinco = 1;
+                        if(contadorCuatro==5){
+                            contadorCuatro = 4;
+                        }
+                    }
+                    if(obtenerCui.value.length==10 && contadorCinco==5){
+                        document.getElementById('cui').value = document.getElementById('cui').value+"-";
+                        if(contadorCinco==5)
+                        {
+                            contadorCinco = 5;
+                        }
+                    }
+                }
+                else{
+                    document.getElementById('cui').readOnly = true;
+                }
+
+                if(codigo == 8 && document.getElementById('cui').readOnly == true){
+                    document.getElementById('cui').readOnly = false;
+                }
             });
         });
     </script>
