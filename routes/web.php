@@ -24,9 +24,15 @@ use App\Http\Controllers\TestController;
 |
 */
 	// Rutas públicas (sin autenticación)
-Route::get('/', function () {
+    Route::get('/csrf-token', function() {
+        return response()->json(['csrf_token' => csrf_token()]);
+        })->middleware('guest');
+
+    Route::get('/', function () {
     return redirect()->action([LoginController::class, 'show']);
 });
+
+Route::post('/student-code',[StudentController::class, 'getStudentCodeMobile'])->middleware('guest');
 
 Route::get('/iniciar-sesion', [LoginController::class, 'show'])->name('login')->middleware('guest');
 Route::post('/iniciar-sesion', [LoginController::class, 'login'])->name('login.perform')->middleware('guest');

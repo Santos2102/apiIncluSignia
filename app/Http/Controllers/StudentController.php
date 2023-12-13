@@ -241,4 +241,14 @@ class StudentController extends Controller
             return back() -> with('error', 'Se produjo un error al procesar la solicitud');
         }
     }
+
+    public function getStudentCodeMobile(Request $request){
+        $student = Student::where('code',$request->code)->first();
+        if($student!=null){
+            return response()->json(['message'=>'Correct'],201);
+        }
+        else{
+            return response()->json(['message'=>'Incorrect'],201);
+        }
+    }
 }
