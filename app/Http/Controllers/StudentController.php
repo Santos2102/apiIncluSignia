@@ -103,7 +103,7 @@ class StudentController extends Controller
                     $lastCode = $studentsAudio;
                     $code =  'A'.$this -> generateCode($lastCode);
                 }else{
-                    $code = 'A000000001';
+                    $code = 'A1';
                 }
             }
         }else{
@@ -115,7 +115,7 @@ class StudentController extends Controller
                     $code =  'V'.$this -> generateCode($lastCode);
 
                 }else{
-                    $code = 'V000000001';
+                    $code = 'V1';
                 }
             }
         }
@@ -123,56 +123,9 @@ class StudentController extends Controller
     }
 
     private function generateCode($lastCode){
-        if(substr($lastCode,1,8) == '00000000'){
-            $number = substr($lastCode,9,1) + 1;
-            $code = '00000000'.$number;
-            if($number == 10){
-                $code = '0000000'.$number;
-            }
-        }else if(substr($lastCode,1,7) == '0000000'){
-            $number = substr($lastCode,8,2) + 1;
-            $code = '0000000'.$number;
-            if($number == 100){
-                $code = '000000'.$number;
-            }
-        }else if(substr($lastCode,1,6) == '000000'){
-            $number = substr($lastCode,7,3) + 1;
-            $code = '000000'.$number;
-            if($number == 1000){
-                $code = '00000'.$number;
-            }
-        }else if(substr($lastCode,1,5) == '00000'){
-            $number = substr($lastCode,6,4) + 1;
-            $code = '00000'.$number;
-            if($number == 10000){
-                $code = '0000'.$number;
-            }
-        }else if(substr($lastCode,1,4) == '0000'){
-            $number = substr($lastCode,5,5) + 1;
-            $code = '0000'.$number;
-            if($number == 100000){
-                $code = '000'.$number;
-            }
-        }else if(substr($lastCode,1,3) == '000'){
-            $number = substr($lastCode,4,6) + 1;
-            $code = '000'.$number;
-            if($number == 1000000){
-                $code = '00'.$number;
-            }
-        }else if(substr($lastCode,1,2) == '00'){
-            $number = substr($lastCode,3,7) + 1;
-            $code = '00'.$number;
-            if($number == 10000000){
-                $code = '0'.$number;
-            }
-        }else if(substr($lastCode,1,1) == '0'){
-            $number = substr($lastCode,2,8) + 1;
-            $code = '0'.$number;
-            if($number == 100000000){
-                $code = ''.$number;
-            }
-        }
-        return $code;
+        $lastNumber = substr($lastCode,1,strlen($lastCode));
+        $codeNumber = $lastNumber+1;
+        return $codeNumber;
     }
 
     /**
