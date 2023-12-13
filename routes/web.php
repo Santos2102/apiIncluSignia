@@ -33,6 +33,7 @@ use App\Http\Controllers\TestController;
 });
 
 Route::post('/student-code',[StudentController::class, 'getStudentCodeMobile'])->middleware('guest');
+Route::post('/login-mobile',[LoginController::class, 'loginMobile'])->middleware('guest');
 
 Route::get('/iniciar-sesion', [LoginController::class, 'show'])->name('login')->middleware('guest');
 Route::post('/iniciar-sesion', [LoginController::class, 'login'])->name('login.perform')->middleware('guest');

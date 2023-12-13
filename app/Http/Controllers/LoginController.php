@@ -8,6 +8,7 @@ use Illuminate\Validation\ValidationException;
 use Illuminate\Support\Facades\Password;
 use App\Models\User;
 use Illuminate\Support\Facades\Hash;
+use Illuminate\Support\Facades\Validator;
 
 class LoginController extends Controller
 {
@@ -40,12 +41,16 @@ class LoginController extends Controller
 
     public function loginMobile(Request $request)
     {
-        $credentials = $request->validate([
-            'email' => ['required', 'email'],
-            'password' => ['required'],
+        $validator = Validator::make($request->all(), [
+            'email' => 'required|email',
+            'password' => 'required',
         ]);
-
-        $user = User::where('email', $request->email)->get(['id','email','password','roleId'])->first();
+        
+        if ($validator->fails()) {
+            return response()->json(['message' => 'Error de validación', 'errors' => $validator->errors()], 422);
+        }
+        
+        $user = User::where('email', $request->email)->first();
         if($user!=NULL){
             if(Hash::check($request->password,$user->password)){
                 return response()->json(['message' => 'Password'], 201);
