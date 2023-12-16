@@ -260,4 +260,9 @@ class StudentController extends Controller
             return response()->json(['message'=>'Incorrect'],201);
         }
     }
+
+    public function findByDisability($disabilityId){
+        $students = Student::where('disabilityId',$disabilityId)->with('person')->get();
+        return response()->json($students);
+    }
 }
