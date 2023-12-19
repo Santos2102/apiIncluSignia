@@ -81,6 +81,43 @@ class TestController extends Controller
         }
     }
 
+
+    public function storeMobile(Request $request)
+    {
+        try 
+        {
+            /*$request->validate([
+                'code' => 'required|string|min:10|max:10',
+                'score' => 'required|numeric|min:0|max:100',
+                'level' => 'required|string'
+            ]);*/
+
+            $student = Student::where('code', $request->code)->first();
+            if ($student == null) {
+                return response()->json(['message' => 'El código ingresado es invalido'], 201);
+            } else {
+                if ($student->status == 'Inactive') {
+                    return response()->json(['message' => 'El estudiante ya no fomar parte de la institución'], 201);
+                }
+                $studentId = $student->studentId;
+            }
+
+            $test = new Test([
+                'level' => $request->level,
+                'score' => $request->score,
+                'studentId' => $studentId
+            ]);
+
+            $test->save();
+
+            return response()->json(['message' => 'Evaluación ingresada correctamente'], 201);
+        }
+        catch(\Exception $e)
+        {
+            return response()->json(['error' => 'Se produjo un error al procesar la solicitud'], 201);
+        }
+    }
+
     /**
      * Display the specified resource.
      *
