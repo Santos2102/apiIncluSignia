@@ -23,13 +23,13 @@ use App\Http\Controllers\TestController;
 | be assigned to the "web" middleware group. Make something great!
 |
 */
-	// Rutas públicas (sin autenticación)
-    Route::get('/csrf-token', function() {
-        return response()->json(['csrf_token' => csrf_token()]);
-        })->middleware('guest');
+// Rutas públicas (sin autenticación)
+Route::get('/csrf-token', function() {
+    return response()->json(['csrf_token' => csrf_token()]);
+    })->middleware('guest');
 
-    Route::get('/', function () {
-    return redirect()->action([LoginController::class, 'show']);
+Route::get('/', function () {
+return redirect()->action([LoginController::class, 'show']);
 });
 
 Route::post('/student-code',[StudentController::class, 'getStudentCodeMobile'])->middleware('guest');
@@ -46,6 +46,8 @@ Route::post('/reset-password', [ResetPassword::class, 'send'])->middleware('gues
 
 Route::get('/change-password', [ChangePassword::class, 'show'])->middleware('guest')->name('change-password');
 Route::post('/change-password', [ChangePassword::class, 'update'])->middleware('guest')->name('change.perform');
+
+Route::post('/storeTestMobile', [TestController::class, 'storeMobile'])->middleware('guest');
 
 // Rutas de autenticación
 Route::group(['middleware' => 'auth'], function () {
@@ -66,6 +68,8 @@ Route::group(['middleware' => 'auth'], function () {
     Route::resource('/practicas',DiagnosticController::class);
     Route::resource('/evaluaciones', TestController::class);
 
+    
+    
     // Ruta genérica para páginas
     Route::get('/{page}', [PageController::class, 'index'])->name('page');
 });
