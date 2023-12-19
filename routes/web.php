@@ -24,16 +24,17 @@ use App\Http\Controllers\TestController;
 |
 */
 // Rutas públicas (sin autenticación)
-Route::get('/csrf-token', function() {
-    return response()->json(['csrf_token' => csrf_token()]);
-    })->middleware('guest');
+    Route::get('/csrf-token', function() {
+        return response()->json(['csrf_token' => csrf_token()]);
+        })->middleware('guest');
 
-Route::get('/', function () {
-return redirect()->action([LoginController::class, 'show']);
+    Route::get('/', function () {
+    return redirect()->action([LoginController::class, 'show']);
 });
 
-Route::post('/student-code',[StudentController::class, 'getStudentCodeMobile'])->middleware('guest');
-Route::post('/login-mobile',[LoginController::class, 'loginMobile'])->middleware('guest');
+Route::get('/students',[StudentController::class, 'getStudents']);
+Route::post('/student-code',[StudentController::class, 'getStudentCodeMobile']);
+Route::post('/login-mobile',[LoginController::class, 'loginMobile']);
 
 Route::get('/iniciar-sesion', [LoginController::class, 'show'])->name('login')->middleware('guest');
 Route::post('/iniciar-sesion', [LoginController::class, 'login'])->name('login.perform')->middleware('guest');
@@ -47,7 +48,9 @@ Route::post('/reset-password', [ResetPassword::class, 'send'])->middleware('gues
 Route::get('/change-password', [ChangePassword::class, 'show'])->middleware('guest')->name('change-password');
 Route::post('/change-password', [ChangePassword::class, 'update'])->middleware('guest')->name('change.perform');
 
-Route::post('/storeTestMobile', [TestController::class, 'storeMobile'])->middleware('guest');
+Route::post('/storeTestMobile', [TestController::class, 'storeMobile']);
+
+Route::get('/students-by-disability/{id}',[StudentController::class, 'findByDisability']);
 
 // Rutas de autenticación
 Route::group(['middleware' => 'auth'], function () {

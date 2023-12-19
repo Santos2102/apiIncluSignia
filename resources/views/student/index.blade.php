@@ -52,15 +52,15 @@
                                         @endphp
                                         @foreach ($students as $student)
                                             <tr>
-                                                <td>{{ ++$i }}</td>
-                                                <td>{{ $student->code }}</td>
-                                                <td>{{ $student->person->name }}</td>
-                                                <td>{{ $student->person->lastName }}</td>
-                                                <td>{{ $student->person->cui }}</td>
-                                                <td>{{ Carbon\Carbon::parse($student->person->birthDate)->format('d-m-Y') }}</td>
-                                                <td>{{ $student->person->age }}</td>
-                                                <td>{{ $student->grade }}</td>
-                                                <td>{{ $student->disability->disabilityName}}</td>
+                                                <td style="text-align:center;">{{ ++$i }}</td>
+                                                <td style="text-align:center;">{{ $student->code }}</td>
+                                                <td style="text-align:center;">{{ $student->person->name }}</td>
+                                                <td style="text-align:center;">{{ $student->person->lastName }}</td>
+                                                <td style="text-align:center;">{{ $student->person->cui }}</td>
+                                                <td style="text-align:center;">{{ Carbon\Carbon::parse($student->person->birthDate)->format('d-m-Y') }}</td>
+                                                <td style="text-align:center;">{{ $student->person->age }}</td>
+                                                <td style="text-align:center;">{{ $student->grade }}</td>
+                                                <td style="text-align:center;">{{ $student->disability->disabilityName}}</td>
 
                                                 <td>
                                                     <form action="{{ route('estudiantes.destroy',encrypt($student->studentId)) }}" method="POST">

@@ -33,6 +33,18 @@ class StudentController extends Controller
         }
     }
 
+    public function getStudents(){
+        try 
+        {
+            $students = student::where('status','Active')->with(['person','disability'])->get();
+            return response()->json($students);
+        }
+        catch(\Exception $e)
+        {
+            return back() -> with('error', 'Se produjo un error al procesar la solicitud');
+        }
+    }
+
     /**
      * Show the form for creating a new resource.
      *
@@ -200,9 +212,6 @@ class StudentController extends Controller
             ]);
             $person -> save();
             $student -> save();
-
-            
-
             DB::commit();
             
             return redirect()->route('estudiantes.index')
@@ -250,5 +259,10 @@ class StudentController extends Controller
         else{
             return response()->json(['message'=>'Incorrect'],201);
         }
+    }
+
+    public function findByDisability($disabilityId){
+        $students = Student::where('disabilityId',$disabilityId)->with('person')->get();
+        return response()->json($students);
     }
 }
