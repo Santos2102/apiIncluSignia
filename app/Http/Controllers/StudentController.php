@@ -265,4 +265,23 @@ class StudentController extends Controller
         $students = Student::where('disabilityId',$disabilityId)->with('person')->get();
         return response()->json($students);
     }
+
+    public function findByNameOrLastname($studentName){
+        $studentName = str_replace("-"," ",$studentName);
+        $persons = Person::where('name', 'LIKE', '%' . $studentName . '%')
+        ->orWhere('lastName', 'LIKE', '%' . $studentName . '%')
+        ->pluck('personId');
+        $students = Student::whereIn('personId',$persons)->with('person')->get();
+        return response()->json($students);
+    }
+
+    public function findByNameLastname($studentName,$studentLastname){
+        $studentName = str_replace("-"," ",$studentName);
+        $studentLastname = str_replace("-"," ",$studentLastname);
+        $persons = Person::where('name', 'LIKE', '%' . $studentName . '%')
+        ->Where('lastName', 'LIKE', '%' . $studentLastname . '%')
+        ->pluck('personId');
+        $students = Student::whereIn('personId',$persons)->with('person')->get();
+        return response()->json($students);
+    }
 }

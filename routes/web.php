@@ -51,6 +51,8 @@ Route::post('/change-password', [ChangePassword::class, 'update'])->middleware('
 Route::post('/storeTestMobile', [TestController::class, 'storeMobile']);
 
 Route::get('/students-by-disability/{id}',[StudentController::class, 'findByDisability']);
+Route::get('/students-by-name/{studentName}',[StudentController::class, 'findByNameOrLastname']);
+Route::get('/students-by-fullname/{studentName}/{studentLastname}',[StudentController::class, 'findByNameLastname']);
 
 // Rutas de autenticación
 Route::group(['middleware' => 'auth'], function () {
