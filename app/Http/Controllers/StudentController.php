@@ -8,6 +8,7 @@ use Illuminate\Http\Request;
 use App\Models\Disability;
 use App\Models\CodeControl;
 use Illuminate\Support\Facades\DB;
+use App\Http\Controllers\DisabilitiesController;
 
 /**
  * Class StudentController
@@ -20,12 +21,19 @@ class StudentController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function index(Request $request)
     {
         try 
         {
-            $students = student::where('status','Active')->with(['person','disability'])->get();
-            return view('student.index', compact('students'));
+            if($request->disabilityFilter!=NULL){
+                $students = $this->getStudentsByDisability(decrypt($request->disabilityFilter));
+            }
+            else {
+                $students = student::where('status','Active')->with(['person','disability'])->get();
+            }
+            $disability = new DisabilitiesController();
+            $disabilities = $disability->index();
+            return view('student.index', compact('students','disabilities'));
         }
         catch(\Exception $e)
         {
@@ -261,8 +269,13 @@ class StudentController extends Controller
         }
     }
 
-    public function findByDisability($disabilityId){
+    private function getStudentsByDisability($disabilityId){
         $students = Student::where('disabilityId',$disabilityId)->with('person')->get();
+        return $students;
+    }
+
+    public function findByDisability($disabilityId){
+        $students = $this->getStudentsByDisability($disabilityId);
         return response()->json($students);
     }
 

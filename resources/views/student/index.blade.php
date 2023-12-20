@@ -6,6 +6,43 @@
         <div class="row">
             <div class="col-sm-12">
                 <div class="card">
+                    <div class="card-body">
+                    <form action="{{route('estudiantes.index')}}" role="form">
+                <div class="justify-content-center row">
+                    <div class="col-xl-3 col-lg-4 col-md-5 col-sm-6 mb-2">
+                        <div class="form-floating">
+                            <select name="disabilityFilter" class="form-control" id="disabilityFilter" onchange="this.form.submit()">
+                            <option value="" selected disabled>Sin filtros</option>
+                            @foreach($disabilities as $disability)
+                                <option value="{{encrypt($disability->disabilityId)}}">{{$disability->disabilityName}}</option>
+                            @endforeach
+                            </select>
+                            <label for="disabilityFilter">Discapacidad</label>
+                        </div>
+                    </div>
+                    <div class="col-xl-2 col-lg-2 col-md-2 col-sm-2 mb-2">
+                        <button type="button" class="btn btn-primary" onclick="window.location='{{route('estudiantes.index')}}'">Eliminar filtro</button>
+                    </div>
+                    <div class="col-xl-4 col-lg-4 col-md-8 col-sm-7 mb-2">
+                        <div class="form-floating">
+                            <input class="form-control text-dark" aria-describedby="basic-addon2" placeholder="Búsqueda por nombre" id="buscarNombre" type="text" name="buscarNombre" value="" required>
+                            <label for="buscarNombre">Nombre</label>
+                        </div>
+                    </div>
+                    <div class="col-xl-2 col-lg-2 col-md-1 col-sm-1">
+                        <button type="submit" class="btn btn-primary">Buscar</button>
+                    </div>
+                </div>
+            </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="container-fluid pt-1">
+        <div class="row">
+            <div class="col-sm-12">
+                <div class="card">
                     <div class="card-header">
                         <div style="display: flex; justify-content: space-between; align-items: center;">
 
