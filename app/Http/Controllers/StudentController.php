@@ -8,6 +8,7 @@ use Illuminate\Http\Request;
 use App\Models\Disability;
 use App\Models\CodeControl;
 use Illuminate\Support\Facades\DB;
+use App\Http\Controllers\DisabilitiesController;
 
 /**
  * Class StudentController
@@ -20,12 +21,30 @@ class StudentController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function index(Request $request)
     {
         try 
         {
-            $students = student::where('status','Active')->with(['person','disability'])->get();
-            return view('student.index', compact('students'));
+            $studentName = str_replace(" ","-",$request->buscarNombre);
+            $studentLastname = str_replace(" ","-",$request->buscarApellido);
+            if($request->disabilityFilter!=NULL){
+                $students = $this->getStudentsByDisability(decrypt($request->disabilityFilter));
+            }
+            else if($request->buscarNombre !="" && $request->buscarApellido !=""){
+                $students = $this->getByNameLastname($studentName,$studentLastname);
+            }
+            else if($request->buscarNombre !=""){
+                $students = $this->getByNameOrLastname($studentName);
+            }
+            else if($request->buscarApellido !=""){
+                $students = $this->getByNameOrLastname($studentLastname);
+            }
+            else {
+                $students = student::where('status','Active')->with(['person','disability'])->get();
+            }
+            $disability = new DisabilitiesController();
+            $disabilities = $disability->index();
+            return view('student.index', compact('students','disabilities'));
         }
         catch(\Exception $e)
         {
@@ -261,27 +280,42 @@ class StudentController extends Controller
         }
     }
 
-    public function findByDisability($disabilityId){
+    private function getStudentsByDisability($disabilityId){
         $students = Student::where('disabilityId',$disabilityId)->with('person')->get();
+        return $students;
+    }
+
+    public function findByDisability($disabilityId){
+        $students = $this->getStudentsByDisability($disabilityId);
         return response()->json($students);
     }
 
-    public function findByNameOrLastname($studentName){
+    private function getByNameOrLastname($studentName){
         $studentName = str_replace("-"," ",$studentName);
         $persons = Person::where('name', 'LIKE', '%' . $studentName . '%')
         ->orWhere('lastName', 'LIKE', '%' . $studentName . '%')
         ->pluck('personId');
         $students = Student::whereIn('personId',$persons)->with('person')->get();
+        return $students;
+    }
+
+    public function findByNameOrLastname($studentName){
+        $students = $this->getByNameOrLastname($studentName);
         return response()->json($students);
     }
 
-    public function findByNameLastname($studentName,$studentLastname){
+    private function getByNameLastname($studentName,$studentLastname){
         $studentName = str_replace("-"," ",$studentName);
         $studentLastname = str_replace("-"," ",$studentLastname);
         $persons = Person::where('name', 'LIKE', '%' . $studentName . '%')
         ->Where('lastName', 'LIKE', '%' . $studentLastname . '%')
         ->pluck('personId');
         $students = Student::whereIn('personId',$persons)->with('person')->get();
+        return $students;
+    }
+
+    public function findByNameLastname($studentName,$studentLastname){
+        $students = $this->getByNameLastname($studentName,$studentLastname);
         return response()->json($students);
     }
 }

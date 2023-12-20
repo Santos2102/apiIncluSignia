@@ -2,7 +2,44 @@
 
 @section('content')
     @include('layouts.navbars.auth.topnav', ['title' => 'Estudiantes'])
-    <div class="container-fluid">
+    <div class="container pt-2">
+        <div class="row">
+            <form action="{{route('estudiantes.index')}}" role="form">
+                <div class="justify-content-center row">
+                    <div class="col-xl-3 col-lg-4 col-md-5 col-sm-6 mb-2">
+                        <div class="form-floating">
+                            <select name="disabilityFilter" class="form-control" id="disabilityFilter" onchange="this.form.submit()">
+                            <option value="" selected disabled>Sin filtros</option>
+                            @foreach($disabilities as $disability)
+                                <option value="{{encrypt($disability->disabilityId)}}">{{$disability->disabilityName}}</option>
+                            @endforeach>
+                            </select>
+                            <label for="disabilityFilter">Discapacidad</label>
+                        </div>
+                    </div>
+                    <div class="col-xl-3 col-lg-3 col-md-8 col-sm-7 mb-2">
+                        <div class="form-floating">
+                            <input class="form-control text-dark" aria-describedby="basic-addon2" placeholder="Nombre" id="buscarNombre" type="text" name="buscarNombre" value="">
+                            <label for="buscarNombre">Nombre</label>
+                        </div>
+                    </div>
+                    <div class="col-xl-3 col-lg-3 col-md-8 col-sm-7 mb-2">
+                        <div class="form-floating">
+                            <input class="form-control text-dark" aria-describedby="basic-addon2" placeholder="Apellido" id="buscarApellido" type="text" name="buscarApellido" value="">
+                            <label for="buscarApellido">Apellido</label>
+                        </div>
+                    </div>
+                    <div class="col-xl-1 col-lg-1 col-md-1 col-sm-1 form-floating">
+                        <button type="submit" class="btn btn-primary">Buscar</button>
+                    </div>
+                    <div class="col-xl-1 col-lg-1 col-md-1 col-sm-1 mb-2 form-floating">
+                        <button type="button" class="btn btn-light" onclick="window.location='{{route('estudiantes.index')}}'">Cancelar</button>
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
+    <div class="container-fluid pt-1">
         <div class="row">
             <div class="col-sm-12">
                 <div class="card">
