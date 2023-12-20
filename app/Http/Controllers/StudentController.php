@@ -25,8 +25,19 @@ class StudentController extends Controller
     {
         try 
         {
+            $studentName = str_replace(" ","-",$request->buscarNombre);
+            $studentLastname = str_replace(" ","-",$request->buscarApellido);
             if($request->disabilityFilter!=NULL){
                 $students = $this->getStudentsByDisability(decrypt($request->disabilityFilter));
+            }
+            else if($request->buscarNombre !="" && $request->buscarApellido !=""){
+                $students = $this->getByNameLastname($studentName,$studentLastname);
+            }
+            else if($request->buscarNombre !=""){
+                $students = $this->getByNameOrLastname($studentName);
+            }
+            else if($request->buscarApellido !=""){
+                $students = $this->getByNameOrLastname($studentLastname);
             }
             else {
                 $students = student::where('status','Active')->with(['person','disability'])->get();
@@ -279,22 +290,32 @@ class StudentController extends Controller
         return response()->json($students);
     }
 
-    public function findByNameOrLastname($studentName){
+    private function getByNameOrLastname($studentName){
         $studentName = str_replace("-"," ",$studentName);
         $persons = Person::where('name', 'LIKE', '%' . $studentName . '%')
         ->orWhere('lastName', 'LIKE', '%' . $studentName . '%')
         ->pluck('personId');
         $students = Student::whereIn('personId',$persons)->with('person')->get();
+        return $students;
+    }
+
+    public function findByNameOrLastname($studentName){
+        $students = $this->getByNameOrLastname($studentName);
         return response()->json($students);
     }
 
-    public function findByNameLastname($studentName,$studentLastname){
+    private function getByNameLastname($studentName,$studentLastname){
         $studentName = str_replace("-"," ",$studentName);
         $studentLastname = str_replace("-"," ",$studentLastname);
         $persons = Person::where('name', 'LIKE', '%' . $studentName . '%')
         ->Where('lastName', 'LIKE', '%' . $studentLastname . '%')
         ->pluck('personId');
         $students = Student::whereIn('personId',$persons)->with('person')->get();
+        return $students;
+    }
+
+    public function findByNameLastname($studentName,$studentLastname){
+        $students = $this->getByNameLastname($studentName,$studentLastname);
         return response()->json($students);
     }
 }
