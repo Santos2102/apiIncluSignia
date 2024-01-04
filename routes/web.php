@@ -69,6 +69,7 @@ Route::group(['middleware' => 'auth'], function () {
     Route::get('/sign-up-static', [PageController::class, 'signup'])->name('sign-up-static');
 
     Route::resource('/docentes',TeacherController::class);
+    Route::get('/estudiantes-eliminados',[StudentController::class, 'deletedStudents'])->name('deletedStudents');
     Route::resource('/estudiantes',StudentController::class);
     Route::resource('/practicas',DiagnosticController::class);
     Route::resource('/evaluaciones', TestController::class);
@@ -77,4 +78,6 @@ Route::group(['middleware' => 'auth'], function () {
     
     // Ruta genérica para páginas
     Route::get('/{page}', [PageController::class, 'index'])->name('page');
+
+    Route::post('/restaurar-estudiante/{id}',[StudentController::class,'restoreStudent'])->name('restoreStudent');
 });

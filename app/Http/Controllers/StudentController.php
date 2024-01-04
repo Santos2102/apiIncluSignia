@@ -318,4 +318,45 @@ class StudentController extends Controller
         $students = $this->getByNameLastname($studentName,$studentLastname);
         return response()->json($students);
     }
+
+    public function deletedStudents(Request $request){
+        try{
+            $studentName = str_replace(" ","-",$request->buscarNombre);
+            $studentLastname = str_replace(" ","-",$request->buscarApellido);
+            if($request->disabilityFilter!=NULL){
+                $students = $this->getStudentsByDisability(decrypt($request->disabilityFilter));
+            }
+            else if($request->buscarNombre !="" && $request->buscarApellido !=""){
+                $students = $this->getByNameLastname($studentName,$studentLastname);
+            }
+            else if($request->buscarNombre !=""){
+                $students = $this->getByNameOrLastname($studentName);
+            }
+            else if($request->buscarApellido !=""){
+                $students = $this->getByNameOrLastname($studentLastname);
+            }
+            else {
+                $students = student::where('status','Inactive')->with(['person','disability'])->get();
+            }
+            $disability = new DisabilitiesController();
+            $disabilities = $disability->index();
+            return view('student.deleted', compact('students','disabilities'));
+        }
+        catch(\Exception $e)
+        {
+            return back() -> with('error', 'Se produjo un error al procesar la solicitud');
+        }
+    }
+
+    public function restoreStudent($id){
+        try{
+            Student::find(decrypt($id))->update(['status'=>'Active']);
+            return redirect()->route('deletedStudents')
+            ->with('success', 'Estudiante restaurado éxitosamente');
+        }
+        catch(\Exception $e)
+        {
+            return back() -> with('error', 'Se produjo un error al intentar restaurar al estudiante');
+        }
+    }
 }
