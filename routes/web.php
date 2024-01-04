@@ -56,9 +56,9 @@ Route::get('/students-by-fullname/{studentName}/{studentLastname}',[StudentContr
 
 // Rutas de autenticación
 Route::group(['middleware' => 'auth'], function () {
-    Route::get('/dashboard', [HomeController::class, 'index'])->name('home');
-    Route::get('/profile', [UserProfileController::class, 'show'])->name('profile');
-    Route::post('/profile', [UserProfileController::class, 'update'])->name('profile.update');
+    Route::get('/inicio', [HomeController::class, 'index'])->name('home');
+    Route::get('/mi-perfil', [UserProfileController::class, 'show'])->name('profile');
+    Route::post('/mi-perfil', [UserProfileController::class, 'update'])->name('profile.update');
     Route::post('logout', [LoginController::class, 'logout'])->name('logout');
 
     // Otras rutas
