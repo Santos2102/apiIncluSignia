@@ -68,6 +68,7 @@ Route::group(['middleware' => 'auth'], function () {
     Route::get('/sign-in-static', [PageController::class, 'signin'])->name('sign-in-static');
     Route::get('/sign-up-static', [PageController::class, 'signup'])->name('sign-up-static');
 
+    Route::get('/docentes-eliminados',[TeacherController::class, 'deletedTeachers'])->name('deletedTeachers');
     Route::resource('/docentes',TeacherController::class);
     Route::get('/estudiantes-eliminados',[StudentController::class, 'deletedStudents'])->name('deletedStudents');
     Route::resource('/estudiantes',StudentController::class);
@@ -80,4 +81,5 @@ Route::group(['middleware' => 'auth'], function () {
     Route::get('/{page}', [PageController::class, 'index'])->name('page');
 
     Route::post('/restaurar-estudiante/{id}',[StudentController::class,'restoreStudent'])->name('restoreStudent');
+    Route::post('/restaurar-docente/{id}',[TeacherController::class,'restoreTeacher'])->name('restoreTeacher');
 });
