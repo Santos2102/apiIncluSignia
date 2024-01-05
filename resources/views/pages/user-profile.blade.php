@@ -56,14 +56,14 @@
                                 <div class="col-md-5">
                                     <div class="form-group">
                                         <label for="example-text-input" class="form-control-label">Contraseña</label>
-                                        <input class="form-control" type="password" name="address"
-                                            value="{{ old('address', auth()->user()->address) }}">
+                                        <input class="form-control" type="password" name="password"
+                                            value="{{ old('password') }}">
                                     </div>
                                 </div>
                                 <div class="col-md-5">
                                     <div class="form-group">
                                         <label for="example-text-input" class="form-control-label">Confirmar contraseña</label>
-                                        <input class="form-control" type="password" name="city" value="{{ old('city', auth()->user()->city) }}">
+                                        <input class="form-control" type="password" name="confirmPassword" value="{{ old('confirmPassword') }}">
                                     </div>
                                 </div>
                                 <div class="col-md-2">
