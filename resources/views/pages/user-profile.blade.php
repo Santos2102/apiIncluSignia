@@ -48,7 +48,8 @@
                         </div>
                     </form>
 
-                    <form role="form" method="POST" action={{ route('profile.update') }} enctype="multipart/form-data">
+                    <form role="form" method="POST" action={{ route('updatePassword') }} enctype="multipart/form-data">
+                        @csrf
                         <div class="card-body">
                             <div class="row">
                                 <hr class="horizontal dark">

@@ -60,6 +60,7 @@ Route::group(['middleware' => 'auth'], function () {
     Route::get('/mi-perfil', [UserProfileController::class, 'show'])->name('profile');
     Route::post('/mi-perfil', [UserProfileController::class, 'update'])->name('profile.update');
     Route::post('logout', [LoginController::class, 'logout'])->name('logout');
+    Route::post('/actualizar-contraseña',[UserProfileController::class, 'updatePassword'])->name('updatePassword');
 
     // Otras rutas
     Route::get('/virtual-reality', [PageController::class, 'vr'])->name('virtual-reality');
