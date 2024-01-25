@@ -32,7 +32,7 @@ use App\Http\Controllers\TestController;
     return redirect()->action([LoginController::class, 'show']);
 });
 
-Route::get('/students',[StudentController::class, 'getStudents']);
+Route::get('/students/{teacherId}',[StudentController::class, 'getStudents']);
 Route::post('/student-code',[StudentController::class, 'getStudentCodeMobile']);
 Route::post('/login-mobile',[LoginController::class, 'loginMobile']);
 
@@ -50,9 +50,10 @@ Route::post('/cambiar-contraseña', [ChangePassword::class, 'update'])->middlewa
 
 Route::post('/storeTestMobile', [TestController::class, 'storeMobile']);
 
-Route::get('/students-by-disability/{id}',[StudentController::class, 'findByDisability']);
-Route::get('/students-by-name/{studentName}',[StudentController::class, 'findByNameOrLastname']);
-Route::get('/students-by-fullname/{studentName}/{studentLastname}',[StudentController::class, 'findByNameLastname']);
+Route::get('/students-by-disability/{id}/{teacherId}',[StudentController::class, 'findByDisability']);
+Route::get('/students-by-name/{studentName}/{teacherId}',[StudentController::class, 'findByNameOrLastname']);
+Route::get('/students-by-fullname/{studentName}/{studentLastname}/{teacherId}',[StudentController::class, 'findByNameLastname']);
+Route::get('/teacher-id/{email}',[TeacherController::class, 'getTeacherId']);
 
 // Rutas de autenticación
 Route::group(['middleware' => 'auth'], function () {

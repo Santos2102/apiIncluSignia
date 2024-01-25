@@ -42,7 +42,7 @@ class Student extends Model
      *
      * @var array
      */
-    protected $fillable = ['studentId','code','grade','status','disabilityId','personId'];
+    protected $fillable = ['studentId','code','grade','status','disabilityId','personId','teacherId'];
     protected $primaryKey = 'studentId';
 
     /**
@@ -77,5 +77,7 @@ class Student extends Model
         return $this->hasMany('App\Models\Test', 'studentId', 'studentId');
     }
     
-
+    public function teacher(){
+        return $this->hasOne('App\Models\Teacher', 'teacherId', 'teacherId');
+    }
 }

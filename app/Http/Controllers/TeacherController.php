@@ -225,4 +225,9 @@ class TeacherController extends Controller
             return back() -> with('error', 'Se produjo un error al intentar restaurar al docente');
         }
     }
+
+    public function getTeacherId($email){
+        $teacher = Teacher::where('email', $email)->first();
+        return response()->json($teacher);
+    }
 }
