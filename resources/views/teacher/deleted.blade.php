@@ -1,24 +1,11 @@
 @extends('layouts.app', ['class' => 'g-sidenav-show bg-gray-100'])
 
 @section('content')
-    @include('layouts.navbars.auth.topnav', ['title' => 'Docentes'])
+    @include('layouts.navbars.auth.topnav', ['title' => 'Docentes eliminados'])
     <div class="container-fluid">
         <div class="row">
             <div class="col-sm-12">
                 <div class="card">
-                    <div class="card-header">
-                        <div style="display: flex; justify-content: space-between; align-items: center;">
-
-                            <span id="card_title">
-                            </span>
-
-                             <div class="float-right">
-                                <a href="{{ route('docentes.create') }}" class="btn btn-primary btn-sm float-right"  data-placement="left">
-                                  {{ __('Nuevo') }}
-                                </a>
-                              </div>
-                        </div>
-                    </div>
                     @if ($message = Session::get('success'))
                         <div class="alert alert-success">
                             <p>{{ $message }}</p>
@@ -43,7 +30,7 @@
                                 </thead>
                                 <tbody>
                                     @if(count($teachers)==0)
-                                        <th colspan="7" style="text-align:center;">SIN DOCENTES REGISTRADOS</th>
+                                        <th colspan="7" style="text-align:center;">SIN DOCENTES ELIMINADOS</th>
                                     @else
                                         @php
                                             $i=0;
@@ -61,11 +48,9 @@
 
 
                                                 <td>
-                                                    <form action="{{ route('docentes.destroy',encrypt($teacher->teacherId)) }}" method="POST">
-                                                        <a class="btn btn-sm btn-success" href="{{ route('docentes.edit',encrypt($teacher->teacherId)) }}"><i class="fa fa-fw fa-edit"></i> {{ __('Editar') }}</a>
+                                                    <form action="{{ route('restoreTeacher',encrypt($teacher->teacherId)) }}" method="POST">
                                                         @csrf
-                                                        @method('DELETE')
-                                                        <button type="submit" class="btn btn-danger btn-sm" onclick="return eliminarDocente('Eliminar docente')"><i class="fa fa-fw fa-trash"></i> {{ __('Eliminar') }}</button>
+                                                        <button type="submit" class="btn btn-dark btn-sm"><i class="fa fa-fw fa-refresh"></i> {{ __('Restaurar') }}</button>
                                                     </form>
                                                 </td>
                                             </tr>

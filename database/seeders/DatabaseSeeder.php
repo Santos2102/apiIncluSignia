@@ -20,7 +20,7 @@ class DatabaseSeeder extends Seeder
         User::create([
             'firstname' => 'Admin',
             'lastname' => 'Admin',
-            'email' => 'admin@argon.com',
+            'email' => 'inclusignia.admon@gmail.com',
             'password' => 'Bienvenida2023'
         ])->assignRole('Administrador');
     }

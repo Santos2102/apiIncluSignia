@@ -26,14 +26,12 @@ class TeacherController extends Controller
         try 
         {
             $teachers = Teacher::where('status','Active')->with('person')->get();
-
             return view('teacher.index', compact('teachers'));
         }
         catch(\Exception $e)
         {
             return back() -> with('error', 'Se produjo un error al procesar la solicitud');
         }
-        
     }
 
     /**
@@ -182,8 +180,6 @@ class TeacherController extends Controller
             DB::rollBack();
             return back()->withErrors($e->validator->errors())->withInput();
         }
-        //request()->validate(Teacher::$rules);
-        
     }
 
     /**
@@ -203,6 +199,30 @@ class TeacherController extends Controller
         catch(\Exception $e)
         {
             return back() -> with('error', 'Se produjo un error al procesar la solicitud');
+        }
+    }
+
+    public function deletedTeachers(){
+        try 
+        {
+            $teachers = Teacher::where('status','Inactive')->with('person')->get();
+            return view('teacher.deleted', compact('teachers'));
+        }
+        catch(\Exception $e)
+        {
+            return back() -> with('error', 'Se produjo un error al procesar la solicitud');
+        }
+    }
+
+    public function restoreTeacher($id){
+        try{
+            Teacher::find(decrypt($id))->update(['status'=>'Active']);
+            return redirect()->route('deletedTeachers')
+            ->with('success', 'Docente restaurado éxitosamente');
+        }
+        catch(\Exception $e)
+        {
+            return back() -> with('error', 'Se produjo un error al intentar restaurar al docente');
         }
     }
 }

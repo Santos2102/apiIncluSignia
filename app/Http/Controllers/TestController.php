@@ -165,7 +165,7 @@ class TestController extends Controller
     {
         try{
             $request->validate([
-                'code'=>'required|string|min:10|max:10',
+                'code'=>'required|string',
                 'score'=>'required|numeric|min:0|max:100',
                 'level'=>'required'
             ]);

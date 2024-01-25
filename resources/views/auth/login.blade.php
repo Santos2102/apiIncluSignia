@@ -24,10 +24,6 @@
                                             <input type="password" name="password" class="form-control form-control-lg" aria-label="Password" value="" placeholder="Contraseña">
                                             @error('password') <p class="text-danger text-xs pt-1"> {{$message}} </p>@enderror
                                         </div>
-                                        <div class="form-check form-switch">
-                                            <input class="form-check-input" name="remember" type="checkbox" id="rememberMe">
-                                            <label class="form-check-label" for="rememberMe">Recuérdame</label>
-                                        </div>
                                         <div class="text-center">
                                             <button type="submit" class="btn btn-lg btn-lg w-100 mt-4 mb-0" style="background-color:#43CDDF;color:#fcfcfc;">Inciar sesión</button>
                                         </div>
@@ -41,10 +37,9 @@
                                 </div>
                             </div>
                         </div>
-                        <div
-                            class="col-6 d-lg-flex d-none h-100 my-auto pe-0 position-absolute top-0 end-0 text-center justify-content-center flex-column">
-                            <div class="position-relative h-100 m-3 px-7 border-radius-lg d-flex flex-column justify-content-center overflow-hidden"
-                                style="background-size: cover;background-image: url('https://aoparcial2ic.online/img/logo3.jpg">
+                        <div class="col-6 d-lg-flex d-none h-100 my-auto pe-0 position-absolute top-0 end-0 text-center justify-content-center flex-column">
+                            <div class="position-relative h-100 m-3 px-7 border-radius-lg d-flex flex-column justify-content-center overflow-hidden" 
+                            style="background-size: cover; background-position: center; background-image: url('https://inclusignia.online/img/main.jpg');">
                                 <span class="mask opacity-6" style="background-color:#80DCE8;"></span>
                             </div>
                         </div>

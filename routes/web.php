@@ -42,11 +42,11 @@ Route::post('/iniciar-sesion', [LoginController::class, 'login'])->name('login.p
 Route::get('/register', [RegisterController::class, 'create'])->middleware('guest')->name('register');
 Route::post('/register', [RegisterController::class, 'store'])->middleware('guest')->name('register.perform');
 
-Route::get('/reset-password', [ResetPassword::class, 'show'])->middleware('guest')->name('reset-password');
-Route::post('/reset-password', [ResetPassword::class, 'send'])->middleware('guest')->name('reset.perform');
+Route::get('/restablecer-contraseña', [ResetPassword::class, 'show'])->middleware('guest')->name('reset-password');
+Route::post('/restablecer-contraseña', [ResetPassword::class, 'send'])->middleware('guest')->name('reset.perform');
 
-Route::get('/change-password', [ChangePassword::class, 'show'])->middleware('guest')->name('change-password');
-Route::post('/change-password', [ChangePassword::class, 'update'])->middleware('guest')->name('change.perform');
+Route::get('/cambiar-contraseña', [ChangePassword::class, 'show'])->middleware('guest')->name('change-password');
+Route::post('/cambiar-contraseña', [ChangePassword::class, 'update'])->middleware('guest')->name('change.perform');
 
 Route::post('/storeTestMobile', [TestController::class, 'storeMobile']);
 
@@ -56,10 +56,11 @@ Route::get('/students-by-fullname/{studentName}/{studentLastname}',[StudentContr
 
 // Rutas de autenticación
 Route::group(['middleware' => 'auth'], function () {
-    Route::get('/dashboard', [HomeController::class, 'index'])->name('home');
-    Route::get('/profile', [UserProfileController::class, 'show'])->name('profile');
-    Route::post('/profile', [UserProfileController::class, 'update'])->name('profile.update');
+    Route::get('/inicio', [HomeController::class, 'index'])->name('home');
+    Route::get('/mi-perfil', [UserProfileController::class, 'show'])->name('profile');
+    Route::post('/mi-perfil', [UserProfileController::class, 'update'])->name('profile.update');
     Route::post('logout', [LoginController::class, 'logout'])->name('logout');
+    Route::post('/actualizar-contraseña',[UserProfileController::class, 'updatePassword'])->name('updatePassword');
 
     // Otras rutas
     Route::get('/virtual-reality', [PageController::class, 'vr'])->name('virtual-reality');
@@ -68,7 +69,9 @@ Route::group(['middleware' => 'auth'], function () {
     Route::get('/sign-in-static', [PageController::class, 'signin'])->name('sign-in-static');
     Route::get('/sign-up-static', [PageController::class, 'signup'])->name('sign-up-static');
 
+    Route::get('/docentes-eliminados',[TeacherController::class, 'deletedTeachers'])->name('deletedTeachers');
     Route::resource('/docentes',TeacherController::class);
+    Route::get('/estudiantes-eliminados',[StudentController::class, 'deletedStudents'])->name('deletedStudents');
     Route::resource('/estudiantes',StudentController::class);
     Route::resource('/practicas',DiagnosticController::class);
     Route::resource('/evaluaciones', TestController::class);
@@ -77,4 +80,7 @@ Route::group(['middleware' => 'auth'], function () {
     
     // Ruta genérica para páginas
     Route::get('/{page}', [PageController::class, 'index'])->name('page');
+
+    Route::post('/restaurar-estudiante/{id}',[StudentController::class,'restoreStudent'])->name('restoreStudent');
+    Route::post('/restaurar-docente/{id}',[TeacherController::class,'restoreTeacher'])->name('restoreTeacher');
 });
