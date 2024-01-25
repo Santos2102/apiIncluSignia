@@ -329,7 +329,9 @@ class StudentController extends Controller
         $persons = Person::where('name', 'LIKE', '%' . $studentName . '%')
             ->orWhere('lastName', 'LIKE', '%' . $studentName . '%')
             ->pluck('personId');
-        $students = Student::whereIn('personId', $persons)->with('person')->get();
+        $students = Student::whereIn('personId', $persons)
+            ->where('status', 'Active')
+            ->with('person')->get();
         return $students;
     }
 
@@ -341,6 +343,7 @@ class StudentController extends Controller
             ->pluck('personId');
         $students = Student::whereIn('personId', $persons)
             ->where('teacherId', $teacherId)
+            ->where('status', 'Active')
             ->with('person')->get();
         return $students;
     }
@@ -358,7 +361,9 @@ class StudentController extends Controller
         $persons = Person::where('name', 'LIKE', '%' . $studentName . '%')
             ->where('lastName', 'LIKE', '%' . $studentLastname . '%')
             ->pluck('personId');
-        $students = Student::whereIn('personId', $persons)->with('person')->get();
+        $students = Student::whereIn('personId', $persons)
+            ->where('status', 'Active')
+            ->with('person')->get();
         return $students;
     }
 
@@ -370,6 +375,7 @@ class StudentController extends Controller
             ->where('lastName', 'LIKE', '%' . $studentLastname . '%')
             ->pluck('personId');
         $students = Student::whereIn('personId', $persons)
+            ->where('status', 'Active')
             ->where('teacherId', $teacherId)
             ->with('person')->get();
         return $students;
