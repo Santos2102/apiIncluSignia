@@ -29,25 +29,15 @@ class Teacher extends Model
 
     protected $perPage = 20;
 
-    /**
-     * Attributes that should be mass-assignable.
-     *
-     * @var array
-     */
     protected $fillable = ['teacherId','status','personId','email','created_at', 'updated_at'];
     protected $primaryKey = 'teacherId';
 
-    /**
-     * @return \Illuminate\Database\Eloquent\Relations\HasOne
-     */
     public function person()
     {
         return $this->hasOne('App\Models\Person', 'personId', 'personId');
     }
-    
-    /**
-     * @return \Illuminate\Database\Eloquent\Relations\HasOne
-     */
-    
 
+    public function students(){
+      return $this->hasMany('App\Models\Student');
+  }
 }
